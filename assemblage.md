@@ -19,6 +19,21 @@ Planches fond rainurées à la defonceuse pour insérer une plaque de 3mm
 
 ### Bas centre
 
+### Tiroir inférieur + réglage
+
+Réglage des supports de pieds
+
+![Plan gauche](images/0397-0444.gif)
+
+Installation sur le meuble des réglettes de tiroir
+
+- Assemblage des tiroirs
+- Fixation planches côté tiroir (lien avec les réglettes, laissant la place pour les supports)
+- Accroche face avant tiroir
+
+![Plan gauche](images/0253-0400.gif)
+
+
 ## Haut
 
 ### Haut droite
