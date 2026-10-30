@@ -44,6 +44,15 @@ Installation sur le meuble des réglettes de tiroir
 
 ### Haut gauche
 
+-   Tourillons sur planche du bas puis assemblage planches lattérales
+-   Pose mur fond
+-   Tourillons puis pose planche du haut
+-   Installation accroches arrières et supports planches
+-   Pose du meuble sur le mur
+-   Pose des étagères
+-   Pose de la porte
+
+![Plan gauche](images/0445-0690.gif)
 
 ##  Illustration
 ![Plan gauche](images/plan_gauche.png)
