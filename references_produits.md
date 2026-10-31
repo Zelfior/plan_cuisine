@@ -52,3 +52,6 @@ https://www.ikea.com/fr/fr/p/maximera-tiroir-haut-blanc-30285025/
 ##  Outillage tourillon
 
 https://www.amazon.fr/dp/B0C6Y8WRV7?ref=cm_sw_r_cso_fm_apan_dp_4MDE6M88V0RVYT7G9XGZ&ref_=cm_sw_r_cso_fm_apan_dp_4MDE6M88V0RVYT7G9XGZ&social_share=cm_sw_r_cso_fm_apan_dp_4MDE6M88V0RVYT7G9XGZ
+
+##  Multiprise meuble
+https://www.leroymerlin.fr/produits/multiprise-angle-4-prises-1m-blanc-legrand-83081141.html
