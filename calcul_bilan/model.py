@@ -105,7 +105,7 @@ class Objet:
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}(compte={self.compte}, "
-            f"prix_unitaire={self.prix_unitaire():.4f}€)"
+            f"prix_unitaire={self.prix_unitaire():.2f}€)"
         )
 
 
@@ -126,11 +126,22 @@ class Planche:
                  largeur: Optional[float] = None,
                  couleur: Optional[Couleur] = None,
                  compte: int = 0, parent: Optional["Meuble"] = None):
-        self.longueur = self.longueur_defaut if longueur is None else longueur
-        self.largeur = self.largeur_defaut if largeur is None else largeur
+        # arrondi à 2 décimales pour éviter le bruit des flottants
+        # (69.89999999999999 -> 69.9) et stabiliser le hash
+        self.longueur = round(
+            self.longueur_defaut if longueur is None else longueur, 2
+        )
+        self.largeur = round(
+            self.largeur_defaut if largeur is None else largeur, 2
+        )
         self.couleur = self.couleur_defaut if couleur is None else couleur
         if self.couleur is None:
             raise ValueError("Aucune couleur définie pour cette planche.")
+        if self.longueur <= 0 or self.largeur <= 0:
+            raise ValueError(
+                f"Dimensions invalides pour {self.__class__.__name__} : "
+                f"{self.longueur}x{self.largeur} cm (négatives ou nulles)."
+            )
         self.compte = compte
         self.parent = parent
         self.historique: Dict[str, int] = {}
@@ -201,7 +212,7 @@ class Planche:
         return (
             f"{self.__class__.__name__}({self.longueur}x{self.largeur}, "
             f"{self.couleur.name if self.couleur else '?'}, "
-            f"compte={self.compte}, prix_unitaire={self.prix_unitaire:.4f}€, "
+            f"compte={self.compte}, prix_unitaire={self.prix_unitaire:.2f}€, "
             f"masse={self.masse:.2f}kg)"
         )
 
@@ -416,7 +427,7 @@ class Inventaire:
         for cls in total_par_type:
             try:
                 prix_u = cls.prix_unitaire()
-                prix_u_txt = f"{prix_u:.4f}€/u"
+                prix_u_txt = f"{prix_u:.2f}€/u"
                 total = total_par_type[cls] * prix_u
             except (ValueError, ZeroDivisionError):
                 prix_u_txt = "#DIV/0!"
@@ -444,10 +455,10 @@ class Inventaire:
         for cle, planche in exemplaires.items():
             total = planche.prix_unitaire * total_par_planche[cle]
             lignes.append(
-                f"{planche.longueur:.2f}x{planche.largeur:.2f} "
+                f"{planche.longueur}x{planche.largeur} "
                 f"({planche.couleur.name}, {planche.prix_m2:.2f}€/m²): "
                 f"{total_par_planche[cle]} u x "
-                f"{planche.prix_unitaire:.4f}€/u = {total:.2f}€"
+                f"{planche.prix_unitaire:.2f}€/u = {total:.2f}€"
             )
             for parent, qte in historique_par_planche[cle].items():
                 lignes.append(f"    {parent} -> {qte}")
@@ -456,9 +467,118 @@ class Inventaire:
         lignes.append(f"Prix total de l'inventaire : {self.prix_total:.2f}€")
         return "\n".join(lignes)
 
+        lignes.append("--- Total ---")
+        lignes.append(f"Prix total de l'inventaire : {self.prix_total:.2f}€")
+        return "\n".join(lignes)
+
     @property
     def prix_total(self) -> float:
         return sum(m.prix_total for m in self.meubles)
+
+    # ------------------------------------------------------------- bilan MD
+    def _collecte(self):
+        """Regroupe planches (par hash) et objets (par classe) par meuble.
+
+        Renvoie (noms_meubles, planches, objets) où :
+        - planches : {hash: {"ex": Planche, "par_meuble": {nom: qte}}}
+        - objets   : {classe: {"par_meuble": {nom: qte}}}
+        """
+        noms = [m.nom for m in self.meubles]
+        planches: Dict[int, Dict] = {}
+        objets: Dict[type, Dict] = {}
+        for meuble in self.meubles:
+            for planche in meuble.planches:
+                cle = hash(planche)
+                entree = planches.setdefault(
+                    cle, {"ex": planche, "par_meuble": {}}
+                )
+                entree["par_meuble"][meuble.nom] = (
+                    entree["par_meuble"].get(meuble.nom, 0) + planche.compte
+                )
+            for objet in meuble.objets:
+                cls = objet.__class__
+                entree = objets.setdefault(cls, {"par_meuble": {}})
+                entree["par_meuble"][meuble.nom] = (
+                    entree["par_meuble"].get(meuble.nom, 0) + objet.compte
+                )
+        return noms, planches, objets
+
+    def bilan_markdown(self) -> str:
+        """Rédige un bilan Markdown de l'inventaire.
+
+        1. un tableau des planches (type, dimensions, couleur, nombre, prix) ;
+        2. un tableau des objets (type, nombre, prix) ;
+        3. un tableau géant croisant chaque planche / objet avec chaque meuble.
+        """
+        noms, planches, objets = self._collecte()
+        lignes: List[str] = ["# Bilan de l'inventaire", ""]
+
+        # -------------------------------------------------- tableau planches
+        lignes += [
+            "## Planches",
+            "",
+            "| Type | Longueur (cm) | Largeur (cm) | Couleur | Nombre | Prix/u (€) | Total (€) |",
+            "|---|---:|---:|---|---:|---:|---:|",
+        ]
+        for entree in planches.values():
+            p = entree["ex"]
+            nombre = sum(entree["par_meuble"].values())
+            lignes.append(
+                f"| {p.__class__.__name__} | {p.longueur} | {p.largeur} "
+                f"| {p.couleur.name} | {nombre} "
+                f"| {p.prix_unitaire:.2f} "
+                f"| {nombre * p.prix_unitaire:.2f} |"
+            )
+        lignes.append("")
+
+        # --------------------------------------------------- tableau objets
+        lignes += [
+            "## Objets",
+            "",
+            "| Type | Nombre | Prix/u (€) | Total (€) |",
+            "|---|---:|---:|---:|",
+        ]
+        for cls, entree in objets.items():
+            nombre = sum(entree["par_meuble"].values())
+            try:
+                prix_u = cls.prix_unitaire()
+                lignes.append(
+                    f"| {cls.__name__} | {nombre} | {prix_u:.2f} "
+                    f"| {nombre * prix_u:.2f} |"
+                )
+            except (ValueError, ZeroDivisionError):
+                lignes.append(f"| {cls.__name__} | {nombre} | #DIV/0! | |")
+        lignes.append("")
+
+        # --------------------------------------------- tableau géant croisé
+        lignes += [
+            "## Répartition par meuble",
+            "",
+            "| Élément | " + " | ".join(noms) + " | Total |",
+            "|---|" + "|".join(["---:"] * (len(noms) + 1)) + "|",
+        ]
+        for cle, entree in planches.items():
+            p = entree["ex"]
+            libelle = (f"{p.__class__.__name__} "
+                       f"{p.longueur}x{p.largeur} ({p.couleur.name})")
+            cases = [str(entree["par_meuble"].get(nom, 0)) for nom in noms]
+            total = sum(entree["par_meuble"].values())
+            lignes.append(f"| {libelle} | " + " | ".join(cases) + f" | {total} |")
+        for cls, entree in objets.items():
+            cases = [str(entree["par_meuble"].get(nom, 0)) for nom in noms]
+            total = sum(entree["par_meuble"].values())
+            lignes.append(f"| {cls.__name__} | " + " | ".join(cases) + f" | {total} |")
+        lignes.append("")
+
+        lignes.append(f"**Prix total de l'inventaire : {self.prix_total:.2f} €**")
+        return "\n".join(lignes)
+
+    def ecrire_bilan_markdown(self, chemin: str = "bilan.md") -> str:
+        """Écrit le bilan Markdown dans un fichier (utf-8)."""
+        contenu = self.bilan_markdown()
+        with open(chemin, "w", encoding="utf-8") as fichier:
+            fichier.write(contenu + "\n")
+        return chemin
 
 
 if __name__ == "__main__":
@@ -477,3 +597,5 @@ if __name__ == "__main__":
     inv.ajouter(etagere)
 
     print(inv.bilan())
+    print()
+    print(inv.bilan_markdown())
