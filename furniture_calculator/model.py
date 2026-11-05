@@ -163,7 +163,7 @@ class Planche:
     # --------------------------------------------------------------- prix
     @property
     def surface_m2(self) -> float:
-        return (self.longueur * self.largeur) / 10_000.0  # cm -> m²
+        return (self.longueur * self.largeur) / 1000_000.0  # cm -> m²
 
     @property
     def prix_unitaire(self) -> float:
@@ -456,15 +456,15 @@ class Inventaire:
                 for parent, qte in objet.historique.items():
                     hist[parent] = hist.get(parent, 0) + qte
         lignes.append("--- Objets ---")
-        for cls in total_par_type:
+        for cls, quantite in total_par_type.items():
             try:
                 prix_u = cls.prix_unitaire()
                 prix_u_txt = f"{prix_u:.2f}€/u"
-                total = total_par_type[cls] * prix_u
+                total = quantite * prix_u
             except (ValueError, ZeroDivisionError):
                 prix_u_txt = "#DIV/0!"
                 total = float("nan")
-            lignes.append(f"{cls.__name__}: {total_par_type[cls]} u "
+            lignes.append(f"{cls.__name__}: {quantite} u "
                           f"x {prix_u_txt} = {total:.2f}€")
             for parent, qte in historique_par_type[cls].items():
                 lignes.append(f"    {parent} -> {qte}")
@@ -638,6 +638,40 @@ class Inventaire:
         with open(chemin, "w", encoding="utf-8") as fichier:
             fichier.write(contenu + "\n")
         return chemin
+
+    def __add__(self, other: "Inventaire") -> "Inventaire":
+        """Fusionne deux inventaires dans un nouvel inventaire indépendant."""
+        if not isinstance(other, Inventaire):
+            return NotImplemented
+
+        resultat = Inventaire()
+
+        for meuble in self.meubles + other.meubles:
+            resultat.ajouter(meuble.copy())
+
+        return resultat
+
+    def __iadd__(self, other: "Inventaire") -> "Inventaire":
+        """Ajoute les meubles d'un autre inventaire au présent inventaire."""
+        if not isinstance(other, Inventaire):
+            return NotImplemented
+
+        # Vérification préalable pour éviter une fusion partielle
+        noms_existants = {m.nom for m in self.meubles}
+        noms_ajoutes = [m.nom for m in other.meubles]
+
+        doublons = noms_existants.intersection(noms_ajoutes)
+
+        if doublons or len(noms_ajoutes) != len(set(noms_ajoutes)):
+            raise ValueError(
+                f"Meubles en double lors de la fusion : "
+                f"{sorted(doublons | { n for n in noms_ajoutes if noms_ajoutes.count(n) > 1 })}"
+            )
+
+        for meuble in other.meubles:
+            self.ajouter(meuble.copy())
+
+        return self
 
 
 if __name__ == "__main__":

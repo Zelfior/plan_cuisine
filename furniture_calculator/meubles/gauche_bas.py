@@ -1,5 +1,5 @@
-import geometry as g
-from model import *
+import furniture_calculator.geometry as g
+from furniture_calculator.model import *
 
 
 # ============================================================
@@ -17,31 +17,13 @@ HAUTEUR_CAISSON = (
 PROFONDEUR_CAISSON = (
     g.PROFONDEUR_MEUBLE_GAUCHE_BAS
     - g.EPAISSEUR_PLANCHE
-    - g.PROFONDEUR_FOND_DE_MEUBLE
-    - g.PROFONDEUR_VIDE_SANITAIRE
+    - g.MARGE_ARRIERE_GAUCHE_BAS
 )
 
 PROFONDEUR_CAISSON_EVIER = (
     g.PROFONDEUR_MEUBLE_GAUCHE_BAS
     - g.EPAISSEUR_PLANCHE
-    - g.PROFONDEUR_FOND_DE_MEUBLE
     - g.PROFONDEUR_VIDE_SANITAIRE_EVIER
-)
-
-HAUTEUR_FOND = (
-    g.HAUTEUR_SOUS_PLAN_GAUCHE
-    - g.INCERTITUDE_SOL
-    - g.HAUTEUR_PORTE_KICK_TOE
-    - g.EPAISSEUR_PLANCHE
-    + g.LARGEUR_RAINURE_FOND
-)
-
-LARGEUR_FOND = (
-    LARGEUR_INTERIEURE + 2 * g.LARGEUR_RAINURE_FOND
-)
-
-LARGEUR_FACADE = (
-    g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE
 )
 
 
@@ -49,8 +31,28 @@ LARGEUR_FACADE = (
 # STRUCTURE COMMUNE
 # ============================================================
 
-def ajouter_structure_meuble(meuble, profondeur_caisson=PROFONDEUR_CAISSON, hauteur_caisson=HAUTEUR_CAISSON):
+def ajouter_base_meuble(
+    meuble: Meuble,
+    profondeur_caisson: float = PROFONDEUR_CAISSON,
+    hauteur_caisson: float = HAUTEUR_CAISSON,
+    largeur_interieure: float = LARGEUR_INTERIEURE,
+    avec_fond: bool = True
+):
+    """Ajoute à un meuble les trois planches de base
 
+    Parameters
+    ----------
+    meuble : Meuble
+        Meuble auquel ajouter les planches de base
+    profondeur_caisson : float, optional
+        Profondeur du caisson, by default PROFONDEUR_CAISSON
+    hauteur_caisson : float, optional
+        Hauteur du caisson, by default HAUTEUR_CAISSON
+    largeur_interieure : float, optional
+        Largeur intérieure du meuble, by default LARGEUR_INTERIEURE
+    avec_fond : bool, optional
+        Indique si le meuble doit avoir un fond ou non, by default True
+    """
     meuble.ajouter(
         PlancheBlanc(
             longueur=profondeur_caisson,
@@ -72,23 +74,29 @@ def ajouter_structure_meuble(meuble, profondeur_caisson=PROFONDEUR_CAISSON, haut
     meuble.ajouter(
         PlancheBlanc(
             longueur=profondeur_caisson,
-            largeur=LARGEUR_INTERIEURE,
+            largeur=largeur_interieure,
             compte=1,
             nom="Base"
         )
     )
 
-    meuble.ajouter(
-        PlancheFond(
-            longueur=HAUTEUR_FOND,
-            largeur=LARGEUR_FOND,
-            compte=1,
-            nom="Fond"
-        )
-    )
-
     meuble.ajouter(Vis(compte=6))
     meuble.ajouter(Tourillon(compte=4))
+
+    if avec_fond:
+        meuble.ajouter(
+            PlancheFond(
+                longueur=(
+                    g.HAUTEUR_SOUS_PLAN_GAUCHE
+                    - g.HAUTEUR_DEBUT_MEUBLE_BAS
+                    - g.EPAISSEUR_PLANCHE
+                    + 2 * g.LARGEUR_RAINURE_FOND
+                ),
+                largeur=largeur_interieure + 2 * g.LARGEUR_RAINURE_FOND,
+                compte=1,
+                nom="Fond"
+            )
+        )
 
 
 # ============================================================
@@ -128,15 +136,25 @@ Façade -- profondeur EPAISSEUR_PLANCHE
 
 Meuble -- profondeur restante dans PROFONDEUR_GAUCHE_BAS
           - EPAISSEUR_PLANCHE
-          - PROFONDEUR_FOND_DE_MEUBLE
-          - PROFONDEUR_VIDE_SANITAIRE
+          - PROFONDEUR_VIDE_SANITAIRE_EVIER
 
 Fond -- profondeur PROFONDEUR_FOND_DE_MEUBLE
 
 Vide sanitaire -- PROFONDEUR_VIDE_SANITAIRE
 """
 
-ajouter_structure_meuble(meuble_g1, profondeur_caisson=PROFONDEUR_CAISSON_EVIER)
+ajouter_base_meuble(meuble_g1, profondeur_caisson=PROFONDEUR_CAISSON_EVIER, avec_fond=False)
+
+meuble_g1.ajouter(
+    PlancheBlanc(
+        longueur=(
+            g.HAUTEUR_FOND_EVIER
+        ),
+        largeur=LARGEUR_INTERIEURE,
+        compte=1,
+        nom="Fond"
+    )
+)
 
 meuble_g1.ajouter(
     PlancheVert(
@@ -145,13 +163,17 @@ meuble_g1.ajouter(
             - g.HAUTEUR_DEBUT_MEUBLE_BAS
             - 2 * g.MARGE_ENTRE_PLANCHE_FACADE
         ),
-        largeur=LARGEUR_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
         nom="Porte"
     )
 )
 
 meuble_g1.ajouter(CharnierePorte(compte=2))
+
+meuble_g1.ajouter(Vis(compte=4))
+meuble_g1.ajouter(Tourillon(compte=4))
+
 
 
 # ============================================================
@@ -193,7 +215,6 @@ Façade -- profondeur EPAISSEUR_PLANCHE
 
 Meuble -- profondeur restante dans PROFONDEUR_GAUCHE_BAS
           - EPAISSEUR_PLANCHE
-          - PROFONDEUR_FOND_DE_MEUBLE
           - PROFONDEUR_VIDE_SANITAIRE
 
 Fond -- profondeur PROFONDEUR_FOND_DE_MEUBLE
@@ -201,16 +222,14 @@ Fond -- profondeur PROFONDEUR_FOND_DE_MEUBLE
 Vide sanitaire -- PROFONDEUR_VIDE_SANITAIRE
 """
 
-ajouter_structure_meuble(meuble_g2)
+ajouter_base_meuble(meuble_g2)
 
 meuble_g2.ajouter(
     PlancheBlanc(
         longueur=(
-            g.PROFONDEUR_MEUBLE_GAUCHE_BAS
+            PROFONDEUR_CAISSON
             - g.MARGE_DEVANT_ETAGERE
-            - g.EPAISSEUR_PLANCHE
             - g.PROFONDEUR_FOND_DE_MEUBLE
-            - g.MARGE_ARRIERE_GAUCHE_BAS
         ),
         largeur=LARGEUR_INTERIEURE,
         compte=1,
@@ -219,6 +238,21 @@ meuble_g2.ajouter(
 )
 
 meuble_g2.ajouter(PionSupportEtagere(compte=4))
+
+meuble_g2.ajouter(
+    PlancheVert(
+        longueur=(
+            g.HAUTEUR_SOUS_PLAN_GAUCHE
+            - g.HAUTEUR_DEBUT_MEUBLE_BAS
+            - 2 * g.MARGE_ENTRE_PLANCHE_FACADE
+        ),
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        compte=1,
+        nom="Porte"
+    )
+)
+
+meuble_g2.ajouter(CharnierePorte(compte=2))
 
 
 # ============================================================
@@ -280,7 +314,7 @@ Fond -- profondeur PROFONDEUR_FOND_DE_MEUBLE
 Vide sanitaire -- PROFONDEUR_VIDE_SANITAIRE
 """
 
-ajouter_structure_meuble(meuble_g3)
+ajouter_base_meuble(meuble_g3)
 
 HAUTEUR_TIROIR_MIN = g.HAUTEUR_TIROIR_MIN
 HAUTEUR_TIROIR_MAX = 28
@@ -302,7 +336,7 @@ meuble_g3.ajouter(TiroirMoyen(compte=2))
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_MIN,
-        largeur=LARGEUR_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=2,
         nom="Porte tiroir bas"
     )
@@ -311,7 +345,7 @@ meuble_g3.ajouter(
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_RESTANT,
-        largeur=LARGEUR_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
         nom="Porte tiroir reste"
     )
@@ -320,7 +354,7 @@ meuble_g3.ajouter(
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_MAX,
-        largeur=LARGEUR_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
         nom="Porte tiroir haut"
     )
@@ -333,48 +367,84 @@ meuble_g3.ajouter(
 
 # To be refined
 
-kick_drawer = Meuble(nom="Kick Drawer")
+def make_kick_drawer(
+    name: str = "Kick Drawer",
+    profondeur_kick_toe: float = g.PROFONDEUR_KICK_TOE_GAUCHE,
+):
+    """Kick drawer"""
+    kick_drawer = Meuble(nom=name)
 
-kick_drawer.ajouter(
-    PlancheVert(
-        longueur=g.HAUTEUR_PORTE_KICK_TOE,
-        largeur=LARGEUR_FACADE,
-        compte=1,
-        nom="Porte kick-toe"
+    kick_drawer.ajouter(
+        PlancheVert(
+            longueur=g.HAUTEUR_PORTE_KICK_TOE,
+            largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+            compte=1,
+            nom="Porte kick-toe"
+        )
     )
-)
 
-kick_drawer.ajouter(RailKickToe(compte=2))
+    kick_drawer.ajouter(RailKickToe(compte=2))
 
-kick_drawer.ajouter(
-    Vis(compte=2 * (2 + 2 + 1 + 1))
-)
-
-kick_drawer.ajouter(
-    Tourillon(compte=2 * 5)
-)
-
-kick_drawer.ajouter(
-    PlancheBlanc(
-        longueur=g.PROFONDEUR_KICK_TOE,
-        largeur=g.LARGEUR_KICK_TOE,
-        compte=1,
-        nom="Base kick-toe"
+    kick_drawer.ajouter(
+        Vis(compte=2 * (2 + 2 + 1 + 1))
     )
-)
 
+    kick_drawer.ajouter(
+        Tourillon(compte=2 * 5)
+    )
+
+    kick_drawer.ajouter(
+        PlancheBlanc(
+            longueur=profondeur_kick_toe,
+            largeur=g.LARGEUR_KICK_TOE,
+            compte=1,
+            nom="Base kick-toe"
+        )
+    )
+
+    kick_drawer.ajouter(
+        PlancheBlanc(
+            longueur=profondeur_kick_toe,
+            largeur=g.HAUTEUR_KICK_TOE,
+            compte=1,
+            nom="gauche"
+        )
+    )
+    kick_drawer.ajouter(
+        PlancheBlanc(
+            longueur=profondeur_kick_toe,
+            largeur=g.HAUTEUR_KICK_TOE,
+            compte=1,
+            nom="droite"
+        )
+    )
+    kick_drawer.ajouter(
+        PlancheBlanc(
+            longueur=g.LARGEUR_KICK_TOE - 2 * g.EPAISSEUR_PLANCHE,
+            largeur=g.HAUTEUR_KICK_TOE,
+            compte=1,
+            nom="fond"
+        )
+    )
+
+    return kick_drawer
 
 # ============================================================
 # INVENTAIRE
 # ============================================================
 
-inventaire = Inventaire()
+inventaire_gauche_bas = Inventaire()
 
-inventaire.ajouter(meuble_g1)
-inventaire.ajouter(meuble_g2)
-inventaire.ajouter(meuble_g3)
-inventaire.ajouter(kick_drawer)
+inventaire_gauche_bas.ajouter(meuble_g1)
+inventaire_gauche_bas.ajouter(meuble_g2)
+inventaire_gauche_bas.ajouter(meuble_g3)
 
-inventaire.ecrire_bilan_markdown("bilan.md")
-
-print(inventaire.bilan())
+inventaire_gauche_bas.ajouter(
+    make_kick_drawer(name="Kick-toe g1", profondeur_kick_toe=g.PROFONDEUR_KICK_TOE_EVIER)
+)
+inventaire_gauche_bas.ajouter(
+    make_kick_drawer(name="Kick-toe g2", profondeur_kick_toe=g.PROFONDEUR_KICK_TOE_GAUCHE)
+)
+inventaire_gauche_bas.ajouter(
+    make_kick_drawer(name="Kick-toe g3", profondeur_kick_toe=g.PROFONDEUR_KICK_TOE_GAUCHE)
+)
