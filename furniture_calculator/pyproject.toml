@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "furniture_calculator"
+version = "0.1.0"
+description = "Calcul du bilan (pièces, découpes, quincaillerie) des meubles de cuisine."
+readme = "../readme.md"
+requires-python = ">=3.10"
+dependencies = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+
+[project.urls]
+Repository = "https://github.com/Zelfior/plan_cuisine"
+
+[tool.setuptools]
+# Les modules utilisent des imports à plat (import geometry, from model import ...),
+# on les expose donc comme modules de premier niveau.
+py-modules = ["bilan", "geometry", "model"]
+packages = ["meubles"]
+

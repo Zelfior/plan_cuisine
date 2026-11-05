@@ -9,6 +9,9 @@ https://www.dispano.fr/p/panneau-decoratif/panneau-laque-support-mdf-interieur-p
 ## Plans de travail
 https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-egger-support-hydrofuge-p3-stratifie-hpl-decor-beton-chicago-gris-clair-f186-finition-st9-chant-postforme-format-410x65cm-ep-A7792231 ?
 
+##  Fond de meuble
+https://www.dispano.fr/p/panneaux/mdf-fibraprint-1-face-laque-blanc-milieu-sec-standard-e1-244x122cm-A1423866
+
 
 #   Quincaillerie
 

@@ -125,7 +125,8 @@ class Planche:
     def __init__(self, longueur: Optional[float] = None,
                  largeur: Optional[float] = None,
                  couleur: Optional[Couleur] = None,
-                 compte: int = 0, parent: Optional["Meuble"] = None):
+                 compte: int = 0, parent: Optional["Meuble"] = None,
+                 nom: Optional[str] = None):
         # arrondi à 2 décimales pour éviter le bruit des flottants
         # (69.89999999999999 -> 69.9) et stabiliser le hash
         self.longueur = round(
@@ -142,6 +143,8 @@ class Planche:
                 f"Dimensions invalides pour {self.__class__.__name__} : "
                 f"{self.longueur}x{self.largeur} cm (négatives ou nulles)."
             )
+        # nom de la planche : personnalisé, ou déduit des dimensions
+        self.nom = nom or f"{self.longueur}x{self.largeur}"
         self.compte = compte
         self.parent = parent
         self.historique: Dict[str, int] = {}
@@ -202,11 +205,16 @@ class Planche:
     def copy(self) -> "Planche":
         """Copie indépendante : mêmes dimensions, couleur, compte, historique."""
         copie = self.__class__(self.longueur, self.largeur, self.couleur,
-                               self.compte, self.parent)
+                               self.compte, self.parent, self.nom)
         copie.historique = dict(self.historique)
         return copie
 
     __copy__ = copy
+
+    @property
+    def nom_complet(self) -> str:
+        """Nom traçable : classe + nom (dimensions ou nom personnalisé)."""
+        return f"{self.__class__.__name__} {self.nom}"
 
     def __repr__(self) -> str:
         return (
@@ -334,6 +342,7 @@ class Meuble:
         self.nom = nom
         self.planches: List[Planche] = []
         self.objets: List[Objet] = []
+        self.inventaire: Optional["Inventaire"] = None  # rempli à l'ajout
 
     def ajouter(self, element: Union[Planche, Objet]) -> None:
         if isinstance(element, Planche):
@@ -343,6 +352,16 @@ class Meuble:
         else:
             raise TypeError(f"Type non supporté : {type(element)!r}")
         element.parent = self
+        # nom unique pour une planche : si le nom est déjà pris dans ce
+        # meuble, on suffixe (_2, _3, ...) pour tracer chaque instance
+        if isinstance(element, Planche):
+            noms_pris = {p.nom for p in self.planches}
+            if element.nom in noms_pris:
+                base = element.nom
+                k = 2
+                while f"{base}_{k}" in noms_pris:
+                    k += 1
+                element.nom = f"{base}_{k}"
         element.historique[self.nom] = (
             element.historique.get(self.nom, 0) + element.compte
         )
@@ -379,6 +398,14 @@ class Meuble:
         ancien_nom = self.nom
         if nouveau_nom == ancien_nom:
             return
+        # refuse un doublon si ce meuble appartient à un inventaire
+        if (self.inventaire is not None
+                and any(m.nom == nouveau_nom
+                        for m in self.inventaire.meubles if m is not self)):
+            raise ValueError(
+                f"Un meuble nommé {nouveau_nom!r} existe déjà dans "
+                f"l'inventaire."
+            )
         for enfant in self.planches + self.objets:
             enfant.parent = self
             if ancien_nom in enfant.historique:
@@ -398,6 +425,11 @@ class Inventaire:
         self.meubles: List[Meuble] = []
 
     def ajouter(self, meuble: Meuble) -> None:
+        if any(m.nom == meuble.nom for m in self.meubles):
+            raise ValueError(
+                f"Un meuble nommé {meuble.nom!r} existe déjà dans l'inventaire."
+            )
+        meuble.inventaire = self
         self.meubles.append(meuble)
 
     # --------------------------------------------------------------- copie
@@ -467,10 +499,6 @@ class Inventaire:
         lignes.append(f"Prix total de l'inventaire : {self.prix_total:.2f}€")
         return "\n".join(lignes)
 
-        lignes.append("--- Total ---")
-        lignes.append(f"Prix total de l'inventaire : {self.prix_total:.2f}€")
-        return "\n".join(lignes)
-
     @property
     def prix_total(self) -> float:
         return sum(m.prix_total for m in self.meubles)
@@ -479,13 +507,16 @@ class Inventaire:
     def _collecte(self):
         """Regroupe planches (par hash) et objets (par classe) par meuble.
 
-        Renvoie (noms_meubles, planches, objets) où :
+        Renvoie (noms_meubles, planches, objets, detail_planches) où :
         - planches : {hash: {"ex": Planche, "par_meuble": {nom: qte}}}
         - objets   : {classe: {"par_meuble": {nom: qte}}}
+        - detail_planches : {hash: {nom_meuble: [(nom_planche, qte)]}}
+          pour tracer, dans la répartition, où va chaque type + taille.
         """
         noms = [m.nom for m in self.meubles]
         planches: Dict[int, Dict] = {}
         objets: Dict[type, Dict] = {}
+        detail: Dict[int, Dict[str, list]] = {}
         for meuble in self.meubles:
             for planche in meuble.planches:
                 cle = hash(planche)
@@ -495,13 +526,26 @@ class Inventaire:
                 entree["par_meuble"][meuble.nom] = (
                     entree["par_meuble"].get(meuble.nom, 0) + planche.compte
                 )
+                par_meuble = detail.setdefault(cle, {})
+                tailles = par_meuble.setdefault(meuble.nom, [])
+                # agrège par nom de planche dans ce meuble
+                deja_present = False
+                nouvelles_tailles = []
+                for n, q in tailles:
+                    if n == planche.nom:
+                        deja_present = True
+                        q += planche.compte
+                    nouvelles_tailles.append((n, q))
+                if not deja_present:
+                    nouvelles_tailles.append((planche.nom, planche.compte))
+                par_meuble[meuble.nom] = nouvelles_tailles
             for objet in meuble.objets:
                 cls = objet.__class__
                 entree = objets.setdefault(cls, {"par_meuble": {}})
                 entree["par_meuble"][meuble.nom] = (
                     entree["par_meuble"].get(meuble.nom, 0) + objet.compte
                 )
-        return noms, planches, objets
+        return noms, planches, objets, detail
 
     def bilan_markdown(self) -> str:
         """Rédige un bilan Markdown de l'inventaire.
@@ -510,7 +554,7 @@ class Inventaire:
         2. un tableau des objets (type, nombre, prix) ;
         3. un tableau géant croisant chaque planche / objet avec chaque meuble.
         """
-        noms, planches, objets = self._collecte()
+        noms, planches, objets, detail = self._collecte()
         lignes: List[str] = ["# Bilan de l'inventaire", ""]
 
         # -------------------------------------------------- tableau planches
@@ -524,7 +568,7 @@ class Inventaire:
             p = entree["ex"]
             nombre = sum(entree["par_meuble"].values())
             lignes.append(
-                f"| {p.__class__.__name__} | {p.longueur} | {p.largeur} "
+                f"| {p.nom_complet} | {p.longueur} | {p.largeur} "
                 f"| {p.couleur.name} | {nombre} "
                 f"| {p.prix_unitaire:.2f} "
                 f"| {nombre * p.prix_unitaire:.2f} |"
@@ -557,13 +601,28 @@ class Inventaire:
             "| Élément | " + " | ".join(noms) + " | Total |",
             "|---|" + "|".join(["---:"] * (len(noms) + 1)) + "|",
         ]
-        for cle, entree in planches.items():
-            p = entree["ex"]
-            libelle = (f"{p.__class__.__name__} "
-                       f"{p.longueur}x{p.largeur} ({p.couleur.name})")
-            cases = [str(entree["par_meuble"].get(nom, 0)) for nom in noms]
-            total = sum(entree["par_meuble"].values())
-            lignes.append(f"| {libelle} | " + " | ".join(cases) + f" | {total} |")
+        # planches : une ligne par type + taille, cellules "nombre: noms"
+        # pour tracer où va chaque planche
+        for cle, par_meuble in detail.items():
+            p = planches[cle]["ex"]
+            libelle = (f"{p.__class__.__name__} {p.longueur}x{p.largeur} "
+                       f"({p.couleur.name})")
+            cases = []
+            total = 0
+            for nom in noms:
+                tailles = par_meuble.get(nom, [])
+                qte = sum(q for _, q in tailles)
+                total += qte
+                if not tailles:
+                    cases.append("0")
+                else:
+                    noms_txt = "<br>".join(
+                        n if q == 1 else f"{n} (x{q})" for n, q in tailles
+                    )
+                    cases.append(f"{qte}: {noms_txt}")
+            lignes.append(
+                f"| {libelle} | " + " | ".join(cases) + f" | {total} |"
+            )
         for cls, entree in objets.items():
             cases = [str(entree["par_meuble"].get(nom, 0)) for nom in noms]
             total = sum(entree["par_meuble"].values())
