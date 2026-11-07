@@ -12,5 +12,6 @@ inventaire += inventaire_gauche_haut
 inventaire += inventaire_droite
 
 inventaire.ecrire_bilan_markdown("bilan.md")
+inventaire.ecrire_bilan_excel("bilan.xlsx")
 
 # print(inventaire.bilan())

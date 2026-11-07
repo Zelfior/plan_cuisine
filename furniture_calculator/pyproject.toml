@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Calcul du bilan (pièces, découpes, quincaillerie) des meubles de cuisine."
 readme = "../readme.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["openpyxl"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",

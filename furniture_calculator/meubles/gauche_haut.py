@@ -10,7 +10,8 @@ meuble_g4.ajouter(
         longueur = g.PROFONDEUR_MEUBLE_GAUCHE_HAUT - g.EPAISSEUR_PLANCHE,
         largeur = g.HAUTEUR_HAUT_GAUCHE,
         compte = 1,
-        nom = "Côté gauche"
+        nom = "Côté gauche",
+        champ = [G1]
     )
 )
 meuble_g4.ajouter(
@@ -18,7 +19,8 @@ meuble_g4.ajouter(
         longueur = g.PROFONDEUR_MEUBLE_GAUCHE_HAUT - g.EPAISSEUR_PLANCHE,
         largeur = g.HAUTEUR_HAUT_GAUCHE,
         compte = 1,
-        nom = "Côté droite"
+        nom = "Côté droite",
+        champ = [G1]
     )
 )
 meuble_g4.ajouter(
@@ -26,7 +28,8 @@ meuble_g4.ajouter(
         longueur = g.PROFONDEUR_MEUBLE_GAUCHE_HAUT - g.EPAISSEUR_PLANCHE,
         largeur = g.LARGEUR_STANDARD - 2 * g.EPAISSEUR_PLANCHE,
         compte = 1,
-        nom = "Bas"
+        nom = "Bas",
+        champ = [G1, G2, L1]
     )
 )
 meuble_g4.ajouter(
@@ -34,7 +37,8 @@ meuble_g4.ajouter(
         longueur = g.PROFONDEUR_MEUBLE_GAUCHE_HAUT - g.EPAISSEUR_PLANCHE,
         largeur = g.LARGEUR_STANDARD - 2 * g.EPAISSEUR_PLANCHE,
         compte = 1,
-        nom = "Haut"
+        nom = "Haut",
+        champ = [G1, G2, L1]
     )
 )
 meuble_g4.ajouter(
@@ -59,7 +63,8 @@ meuble_g4.ajouter(
         longueur = g.PROFONDEUR_MEUBLE_GAUCHE_HAUT - g.EPAISSEUR_PLANCHE - g.MARGE_DEVANT_ETAGERE - g.PROFONDEUR_FOND_DE_MEUBLE,
         largeur = g.LARGEUR_STANDARD - 2 * g.EPAISSEUR_PLANCHE,
         compte = 2,
-        nom = "Etagère"
+        nom = "Etagère",
+        champ = [G1]
     )
 )
 meuble_g4.ajouter(

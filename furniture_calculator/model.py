@@ -304,10 +304,10 @@ class PlancheVert(Planche):
 
 class PlancheFond(Planche):
     epaisseur_cm = 0.3
-    masse_par_cm2 = 0.000319444
+    masse_par_cm2 = 825 * 0.003 / 1e4
     longueur_defaut = 120
     largeur_defaut = 60
-    prix_m2 = 3.49
+    prix_m2 = 10.62
     couleur_defaut = Couleur.FOND
 
 
@@ -789,6 +789,128 @@ class Inventaire:
         return chemin
 
     # --------------------------------------------------------------- fusion
+
+    # --------------------------------------------------------- fichier Excel
+    def ecrire_bilan_excel(
+        self, chemin: str = "bilan.xlsx"
+    ) -> str:
+        """Exporte les trois tableaux du bilan dans un classeur Excel.
+
+        Le classeur contient trois onglets : « Planches », « Objets » et
+        « Répartition par meuble ». Les données sont calculées à partir de
+        l'inventaire au moment de l'export.
+        """
+        from openpyxl import Workbook
+        from openpyxl.styles import Alignment, Font, PatternFill
+        from openpyxl.utils import get_column_letter
+
+        noms, planches, objets, detail = self._collecte()
+
+        classeur = Workbook()
+        ws_planches = classeur.active
+        ws_planches.title = "Planches"
+        ws_objets = classeur.create_sheet("Objets")
+        ws_repartition = classeur.create_sheet("Répartition par meuble")
+
+        remplissage_entete = PatternFill(fill_type="solid", fgColor="1F4E78")
+        police_entete = Font(color="FFFFFF", bold=True)
+        alignement_entete = Alignment(
+            horizontal="center", vertical="center", wrap_text=True
+        )
+
+        def preparer_feuille(feuille, entetes):
+            feuille.append(entetes)
+            feuille.freeze_panes = "A2"
+            feuille.auto_filter.ref = f"A1:{get_column_letter(len(entetes))}1"
+            for cellule in feuille[1]:
+                cellule.fill = remplissage_entete
+                cellule.font = police_entete
+                cellule.alignment = alignement_entete
+            feuille.row_dimensions[1].height = 30
+
+        def ajuster_largeurs(feuille):
+            for colonne in feuille.columns:
+                lettre = get_column_letter(colonne[0].column)
+                largeur = max(
+                    (len(str(cellule.value or "")) for cellule in colonne),
+                    default=10,
+                )
+                feuille.column_dimensions[lettre].width = min(
+                    max(largeur + 2, 12), 45
+                )
+
+        # Onglet 1 : planches.
+        preparer_feuille(ws_planches, [
+            "Type", "Longueur (cm)", "Largeur (cm)", "Couleur",
+            "Champ", "Nombre", "Prix/u (€)", "Total (€)",
+        ])
+        for entree in planches.values():
+            p = entree["ex"]
+            nombre = sum(entree["par_meuble"].values())
+            champ_txt = ", ".join(c.name for c in p.champ) or "-"
+            ws_planches.append([
+                p.nom_complet, p.longueur, p.largeur, p.couleur.name,
+                champ_txt, nombre, p.prix_unitaire,
+                nombre * p.prix_unitaire,
+            ])
+        for ligne in ws_planches.iter_rows(min_row=2, min_col=7, max_col=8):
+            for cellule in ligne:
+                cellule.number_format = '#,##0.00 [$€-fr-FR]'
+
+        # Onglet 2 : quincaillerie / objets.
+        preparer_feuille(
+            ws_objets, ["Type", "Nombre", "Prix/u (€)", "Total (€)"]
+        )
+        for cls, entree in objets.items():
+            nombre = sum(entree["par_meuble"].values())
+            try:
+                prix_u = cls.prix_unitaire()
+                total = nombre * prix_u
+            except (ValueError, ZeroDivisionError):
+                prix_u, total = "#DIV/0!", ""
+            ws_objets.append([cls.__name__, nombre, prix_u, total])
+        for ligne in ws_objets.iter_rows(min_row=2, min_col=3, max_col=4):
+            for cellule in ligne:
+                if isinstance(cellule.value, (int, float)):
+                    cellule.number_format = '#,##0.00 [$€-fr-FR]'
+
+        # Onglet 3 : répartition des quantités par meuble.
+        preparer_feuille(
+            ws_repartition, ["Élément", *noms, "Total"]
+        )
+        for cle, par_meuble in detail.items():
+            p = planches[cle]["ex"]
+            champ_txt = ", ".join(c.name for c in p.champ) or "-"
+            libelle = (
+                f"{p.__class__.__name__} {p.longueur}x{p.largeur} "
+                f"({p.couleur.name}, Champ: {champ_txt})"
+            )
+            cases, total = [], 0
+            for nom in noms:
+                tailles = par_meuble.get(nom, [])
+                quantite = sum(q for _, q in tailles)
+                total += quantite
+                if not tailles:
+                    cases.append(0)
+                else:
+                    details_noms = ", ".join(
+                        n if q == 1 else f"{n} (x{q})"
+                        for n, q in tailles
+                    )
+                    cases.append(f"{quantite}: {details_noms}")
+            ws_repartition.append([libelle, *cases, total])
+
+        for cls, entree in objets.items():
+            cases = [entree["par_meuble"].get(nom, 0) for nom in noms]
+            ws_repartition.append([cls.__name__, *cases, sum(cases)])
+
+        for feuille in classeur.worksheets:
+            feuille.sheet_view.showGridLines = False
+            ajuster_largeurs(feuille)
+
+        classeur.save(chemin)
+        return chemin
+
     def __add__(self, other: "Inventaire") -> "Inventaire":
         """Fusionne deux inventaires dans un nouvel inventaire indépendant."""
 

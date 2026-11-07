@@ -92,6 +92,16 @@ meuble_d1.ajouter(
         champ = [G1, G2, L1, L2]
     )
 )
+meuble_d1.ajouter(
+    PlancheFond(
+        longueur = LARGEUR_INTERIEURE + 2 * g.LARGEUR_RAINURE_FOND,
+        largeur = (
+            g.HAUTEUR_BAS_DROITE - g.INCERTITUDE_SOL - g.HAUTEUR_PORTE_KICK_TOE - 2 * g.EPAISSEUR_PLANCHE + g.LARGEUR_RAINURE_FOND
+        ),
+        compte = 1,
+        nom = "Fond"
+    )
+)
 
 hauteur_tiroir_d2 = (
     g.HAUTEUR_FACADE_BAS_DROITE_CORRIGEE
@@ -122,6 +132,16 @@ meuble_d2.ajouter(
     CharnierePorte(compte = (
         2 * 2
     ))
+)
+meuble_d2.ajouter(
+    PlancheFond(
+        longueur = LARGEUR_INTERIEURE + 2 * g.LARGEUR_RAINURE_FOND,
+        largeur = (
+            g.HAUTEUR_FOUR - g.EPAISSEUR_PLANCHE + g.LARGEUR_RAINURE_FOND
+        ),
+        compte = 1,
+        nom = "Fond"
+    )
 )
 
 
@@ -184,6 +204,16 @@ meuble_d3.ajouter(
         compte = 2,
         nom = "Etagere",
         champ = [L1]
+    )
+)
+meuble_d3.ajouter(
+    PlancheFond(
+        longueur = g.LARGEUR_STANDARD * 2 - 2*(g.EPAISSEUR_PLANCHE * 2 + g.MARGE_PORTE_COULISSANTE) + 2 * g.LARGEUR_RAINURE_FOND,
+        largeur = (
+            g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.EPAISSEUR_PLANCHE + g.LARGEUR_RAINURE_FOND * 2
+        ),
+        compte = 1,
+        nom = "Fond"
     )
 )
 meuble_d3.ajouter(
@@ -293,6 +323,16 @@ meuble_d4.ajouter(
         champ=[L1]
     )
 )
+meuble_d4.ajouter(
+    PlancheFond(
+        longueur = g.LARGEUR_STANDARD - 2*g.EPAISSEUR_PLANCHE + 2 * g.LARGEUR_RAINURE_FOND,
+        largeur = (
+            g.HAUTEUR_DROITE - g.HAUTEUR_BAS_DROITE - g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.EPAISSEUR_PLANCHE + g.LARGEUR_RAINURE_FOND * 2
+        ),
+        compte = 1,
+        nom = "Fond"
+    )
+)
 
 meuble_d4.ajouter(
     PionSupportEtagere(compte = (
@@ -372,7 +412,7 @@ meuble_d6.ajouter(
 )
 meuble_d6.ajouter(
     PlancheBlanc(
-        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO - 2*g.EPAISSEUR_PLANCHE,
         largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
         compte=1,
         nom="Gauche",
@@ -381,7 +421,7 @@ meuble_d6.ajouter(
 )
 meuble_d6.ajouter(
     PlancheBlanc(
-        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO - 2*g.EPAISSEUR_PLANCHE,
         largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
         compte=1,
         nom="DROITE",
@@ -397,6 +437,17 @@ meuble_d6.ajouter(
         champ=[L1]
     )
 )
+meuble_d4.ajouter(
+    PlancheFond(
+        longueur = g.LARGEUR_STANDARD - 2*g.EPAISSEUR_PLANCHE + 2 * g.LARGEUR_RAINURE_FOND,
+        largeur = (
+            g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO - 2*g.EPAISSEUR_PLANCHE + g.LARGEUR_RAINURE_FOND * 2
+        ),
+        compte = 1,
+        nom = "Fond"
+    )
+)
+
 
 meuble_d6.ajouter(
     PionSupportEtagere(compte = (

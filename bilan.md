@@ -10,7 +10,7 @@
 | PlancheVert Porte | 706 | 597 | VERT | G1, G2, L1, L2 | 2 | 23.75 | 47.50 |
 | PlancheBlanc Côtés gauche | 551 | 888 | BLANC | G1 | 4 | 9.81 | 39.22 |
 | PlancheBlanc Base | 551 | 562 | BLANC | G1 | 4 | 6.21 | 24.82 |
-| PlancheFond Fond | 699 | 568 | FOND | - | 4 | 1.39 | 5.54 |
+| PlancheFond Fond | 699 | 568 | FOND | - | 4 | 4.22 | 16.87 |
 | PlancheBlanc Etagère | 518 | 562 | BLANC | G1 | 1 | 5.83 | 5.83 |
 | PlancheVert Porte tiroir bas | 120 | 597 | VERT | G1, G2, L1, L2 | 2 | 4.04 | 8.07 |
 | PlancheVert Porte tiroir reste | 252 | 597 | VERT | G1, G2, L1, L2 | 1 | 8.48 | 8.48 |
@@ -23,25 +23,30 @@
 | PlancheBlanc Base kick-toe | 600 | 549.3 | BLANC | L1, L2 | 2 | 6.60 | 13.21 |
 | PlancheBlanc gauche | 600 | 149 | BLANC | L1 | 4 | 1.79 | 7.17 |
 | PlancheBlanc cale | 600 | 100 | BLANC | L1 | 4 | 1.20 | 4.81 |
-| PlancheBlanc Côté gauche | 360 | 900 | BLANC | - | 4 | 6.49 | 25.97 |
-| PlancheBlanc Bas | 360 | 562 | BLANC | - | 4 | 4.05 | 16.22 |
+| PlancheBlanc Côté gauche | 360 | 900 | BLANC | G1 | 4 | 6.49 | 25.97 |
+| PlancheBlanc Bas | 360 | 562 | BLANC | G1, G2, L1 | 4 | 4.05 | 16.22 |
 | PlancheVert Porte | 900 | 597 | VERT | G1, G2, L1, L2 | 2 | 30.28 | 60.55 |
-| PlancheFond Fond | 868 | 568 | FOND | - | 2 | 1.72 | 3.44 |
-| PlancheBlanc Etagère | 327 | 562 | BLANC | - | 4 | 3.68 | 14.73 |
+| PlancheFond Fond | 868 | 568 | FOND | - | 2 | 5.24 | 10.47 |
+| PlancheBlanc Etagère | 327 | 562 | BLANC | G1 | 4 | 3.68 | 14.73 |
 | PlancheBlanc Côtés gauche | 551 | 919 | BLANC | G1 | 4 | 10.15 | 40.59 |
 | PlancheBlanc Haut | 600 | 551 | BLANC | L1, G1, G2 | 8 | 6.63 | 53.00 |
 | PlancheVert Tiroir 1 | 598.5 | 266.0 | VERT | G1, G2, L1, L2 | 2 | 8.97 | 17.94 |
 | PlancheVert Tiroir 3 | 598.5 | 120 | VERT | G1, G2, L1, L2 | 2 | 4.05 | 8.09 |
+| PlancheFond Fond_2 | 568 | 730 | FOND | - | 1 | 4.40 | 4.40 |
 | PlancheVert Porte four | 598.5 | 616 | VERT | G1, G2, L1, L2 | 1 | 20.77 | 20.77 |
 | PlancheVert Tiroir | 598.5 | 178 | VERT | G1, G2, L1, L2 | 1 | 6.00 | 6.00 |
+| PlancheFond Fond_2 | 568 | 584 | FOND | - | 1 | 3.52 | 3.52 |
 | PlancheVert Porte | 598.5 | 806 | VERT | G1, G2, L1, L2 | 2 | 27.18 | 54.37 |
 | PlancheBlanc Bas | 1200 | 551 | BLANC | L1, G1, G2 | 2 | 13.25 | 26.50 |
 | PlancheBlanc Côté extérieurs | 812 | 551 | BLANC | L1 | 4 | 8.97 | 35.86 |
 | PlancheBlanc Etagere | 1004 | 300 | BLANC | L1 | 2 | 6.04 | 12.07 |
+| PlancheFond Fond | 1010 | 818 | FOND | - | 1 | 8.77 | 8.77 |
 | PlancheVert Porte | 1000 | 597 | VERT | L1, L2, G1, G2 | 3 | 33.64 | 100.92 |
 | PlancheBlanc Gauche | 662 | 551 | BLANC | L1 | 4 | 7.31 | 29.24 |
 | PlancheBlanc Etagere | 562 | 518 | BLANC | L1 | 6 | 5.83 | 35.00 |
-| PlancheBlanc Gauche | 1000 | 551 | BLANC | L1 | 2 | 11.04 | 22.08 |
+| PlancheFond Fond | 568 | 668 | FOND | - | 2 | 4.03 | 8.06 |
+| PlancheFond Fond_2 | 568 | 968 | FOND | - | 1 | 5.84 | 5.84 |
+| PlancheBlanc Gauche | 962 | 551 | BLANC | L1 | 2 | 10.62 | 21.24 |
 
 ## Objets
 
@@ -82,25 +87,30 @@
 | PlancheBlanc 600x549.3 (BLANC, Champ: L1, L2) | 0 | 0 | 0 | 0 | 1: Base kick-toe | 1: Base kick-toe | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheBlanc 600x149 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 2: gauche<br>droite | 2: gauche<br>droite | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | PlancheBlanc 600x100 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 2: cale (x2) | 2: cale (x2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
-| PlancheBlanc 360x900 (BLANC, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Côté gauche<br>Côté droite | 2: Côté gauche<br>Côté droite | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
-| PlancheBlanc 360x562 (BLANC, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Bas<br>Haut | 2: Bas<br>Haut | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
+| PlancheBlanc 360x900 (BLANC, Champ: G1) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Côté gauche<br>Côté droite | 2: Côté gauche<br>Côté droite | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
+| PlancheBlanc 360x562 (BLANC, Champ: G1, G2, L1) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Bas<br>Haut | 2: Bas<br>Haut | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | PlancheVert 900x597 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 1: Porte | 1: Porte | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheFond 868x568 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond | 1: Fond | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
-| PlancheBlanc 327x562 (BLANC, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagère (x2) | 2: Etagère (x2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
+| PlancheBlanc 327x562 (BLANC, Champ: G1) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagère (x2) | 2: Etagère (x2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | PlancheBlanc 551x919 (BLANC, Champ: G1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Côtés gauche<br>Côtés droite | 2: Côtés gauche<br>Côtés droite | 0 | 0 | 0 | 0 | 4 |
 | PlancheBlanc 600x551 (BLANC, Champ: L1, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Haut | 1: Haut | 0 | 2: Bas<br>Haut | 2: Bas<br>Haut | 2: Bas<br>Haut | 8 |
 | PlancheVert 598.5x266.0 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Tiroir 1<br>Tiroir 2 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheVert 598.5x120 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Tiroir 3<br>Tiroir 4 | 0 | 0 | 0 | 0 | 0 | 2 |
+| PlancheFond 568x730 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond_2 | 0 | 0 | 0 | 0 | 0 | 1 |
 | PlancheVert 598.5x616 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Porte four | 0 | 0 | 0 | 0 | 1 |
 | PlancheVert 598.5x178 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Tiroir | 0 | 0 | 0 | 0 | 1 |
+| PlancheFond 568x584 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond_2 | 0 | 0 | 0 | 0 | 1 |
 | PlancheVert 598.5x806 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Porte (x2) | 0 | 0 | 0 | 2 |
 | PlancheBlanc 1200x551 (BLANC, Champ: L1, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Bas<br>Haut | 0 | 0 | 0 | 2 |
 | PlancheBlanc 812x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4: Côté extérieurs (x2)<br>Côté intérieurs (x2) | 0 | 0 | 0 | 4 |
 | PlancheBlanc 1004x300 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagere (x2) | 0 | 0 | 0 | 2 |
+| PlancheFond 1010x818 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond | 0 | 0 | 0 | 1 |
 | PlancheVert 1000x597 (VERT, Champ: L1, L2, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Porte | 1: Porte | 1: Porte | 3 |
 | PlancheBlanc 662x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 2: Gauche<br>DROITE | 0 | 4 |
 | PlancheBlanc 562x518 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagere (x2) | 2: Etagere (x2) | 2: Etagere (x2) | 6 |
-| PlancheBlanc 1000x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 2 |
+| PlancheFond 568x668 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond | 1: Fond | 0 | 2 |
+| PlancheFond 568x968 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond_2 | 0 | 0 | 1 |
+| PlancheBlanc 962x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 2 |
 | Vis | 10 | 6 | 6 | 12 | 12 | 12 | 12 | 12 | 0 | 12 | 12 | 24 | 12 | 12 | 12 | 166 |
 | Tourillon | 8 | 4 | 4 | 10 | 10 | 10 | 8 | 8 | 0 | 8 | 8 | 16 | 8 | 8 | 8 | 118 |
 | CharnierePorte | 2 | 2 | 0 | 0 | 0 | 0 | 2 | 2 | 0 | 0 | 4 | 4 | 2 | 2 | 2 | 22 |
@@ -113,4 +123,4 @@
 | ChevilleMurale | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
 | GlissierePorte | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 4 |
 
-**Prix total de l'inventaire : 1544.63 €**
+**Prix total de l'inventaire : 1592.75 €**
