@@ -29,24 +29,28 @@
 | PlancheFond Fond | 868 | 568 | FOND | - | 2 | 1.72 | 3.44 |
 | PlancheBlanc Etagère | 327 | 562 | BLANC | - | 4 | 3.68 | 14.73 |
 | PlancheBlanc Côtés gauche | 551 | 919 | BLANC | G1 | 4 | 10.15 | 40.59 |
-| PlancheBlanc Haut | 600 | 551 | BLANC | L1 | 2 | 6.63 | 13.25 |
+| PlancheBlanc Haut | 600 | 551 | BLANC | L1, G1, G2 | 8 | 6.63 | 53.00 |
 | PlancheVert Tiroir 1 | 598.5 | 266.0 | VERT | G1, G2, L1, L2 | 2 | 8.97 | 17.94 |
 | PlancheVert Tiroir 3 | 598.5 | 120 | VERT | G1, G2, L1, L2 | 2 | 4.05 | 8.09 |
 | PlancheVert Porte four | 598.5 | 616 | VERT | G1, G2, L1, L2 | 1 | 20.77 | 20.77 |
 | PlancheVert Tiroir | 598.5 | 178 | VERT | G1, G2, L1, L2 | 1 | 6.00 | 6.00 |
-| PlancheVert Porte | 598.5 | 847 | VERT | G1, G2, L1, L2 | 2 | 28.57 | 57.13 |
+| PlancheVert Porte | 598.5 | 806 | VERT | G1, G2, L1, L2 | 2 | 27.18 | 54.37 |
 | PlancheBlanc Bas | 1200 | 551 | BLANC | L1, G1, G2 | 2 | 13.25 | 26.50 |
 | PlancheBlanc Côté extérieurs | 812 | 551 | BLANC | L1 | 4 | 8.97 | 35.86 |
 | PlancheBlanc Etagere | 1004 | 300 | BLANC | L1 | 2 | 6.04 | 12.07 |
+| PlancheVert Porte | 1000 | 597 | VERT | L1, L2, G1, G2 | 3 | 33.64 | 100.92 |
+| PlancheBlanc Gauche | 662 | 551 | BLANC | L1 | 4 | 7.31 | 29.24 |
+| PlancheBlanc Etagere | 562 | 518 | BLANC | L1 | 6 | 5.83 | 35.00 |
+| PlancheBlanc Gauche | 1000 | 551 | BLANC | L1 | 2 | 11.04 | 22.08 |
 
 ## Objets
 
 | Type | Nombre | Prix/u (€) | Total (€) |
 |---|---:|---:|---:|
-| Vis | 130 | 0.63 | 81.87 |
-| Tourillon | 94 | 0.07 | 7.05 |
-| CharnierePorte | 16 | 3.98 | 63.60 |
-| PionSupportEtagere | 28 | 0.77 | 21.46 |
+| Vis | 166 | 0.63 | 104.55 |
+| Tourillon | 118 | 0.07 | 8.85 |
+| CharnierePorte | 22 | 3.98 | 87.45 |
+| PionSupportEtagere | 52 | 0.77 | 39.86 |
 | TiroirBas | 4 | 34.00 | 136.00 |
 | TiroirMoyen | 4 | 41.00 | 164.00 |
 | RailKickToe | 6 | 5.65 | 33.90 |
@@ -84,19 +88,23 @@
 | PlancheFond 868x568 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond | 1: Fond | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheBlanc 327x562 (BLANC, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagère (x2) | 2: Etagère (x2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | PlancheBlanc 551x919 (BLANC, Champ: G1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Côtés gauche<br>Côtés droite | 2: Côtés gauche<br>Côtés droite | 0 | 0 | 0 | 0 | 4 |
-| PlancheBlanc 600x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Haut | 1: Haut | 0 | 0 | 0 | 0 | 2 |
+| PlancheBlanc 600x551 (BLANC, Champ: L1, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Haut | 1: Haut | 0 | 2: Bas<br>Haut | 2: Bas<br>Haut | 2: Bas<br>Haut | 8 |
 | PlancheVert 598.5x266.0 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Tiroir 1<br>Tiroir 2 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheVert 598.5x120 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Tiroir 3<br>Tiroir 4 | 0 | 0 | 0 | 0 | 0 | 2 |
 | PlancheVert 598.5x616 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Porte four | 0 | 0 | 0 | 0 | 1 |
 | PlancheVert 598.5x178 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Tiroir | 0 | 0 | 0 | 0 | 1 |
-| PlancheVert 598.5x847 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Porte (x2) | 0 | 0 | 0 | 2 |
+| PlancheVert 598.5x806 (VERT, Champ: G1, G2, L1, L2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Porte (x2) | 0 | 0 | 0 | 2 |
 | PlancheBlanc 1200x551 (BLANC, Champ: L1, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Bas<br>Haut | 0 | 0 | 0 | 2 |
 | PlancheBlanc 812x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4: Côté extérieurs (x2)<br>Côté intérieurs (x2) | 0 | 0 | 0 | 4 |
 | PlancheBlanc 1004x300 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagere (x2) | 0 | 0 | 0 | 2 |
-| Vis | 10 | 6 | 6 | 12 | 12 | 12 | 12 | 12 | 0 | 12 | 12 | 24 | 0 | 0 | 0 | 130 |
-| Tourillon | 8 | 4 | 4 | 10 | 10 | 10 | 8 | 8 | 0 | 8 | 8 | 16 | 0 | 0 | 0 | 94 |
-| CharnierePorte | 2 | 2 | 0 | 0 | 0 | 0 | 2 | 2 | 0 | 0 | 4 | 4 | 0 | 0 | 0 | 16 |
-| PionSupportEtagere | 0 | 4 | 0 | 0 | 0 | 0 | 8 | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 28 |
+| PlancheVert 1000x597 (VERT, Champ: L1, L2, G1, G2) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Porte | 1: Porte | 1: Porte | 3 |
+| PlancheBlanc 662x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 2: Gauche<br>DROITE | 0 | 4 |
+| PlancheBlanc 562x518 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Etagere (x2) | 2: Etagere (x2) | 2: Etagere (x2) | 6 |
+| PlancheBlanc 1000x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 2 |
+| Vis | 10 | 6 | 6 | 12 | 12 | 12 | 12 | 12 | 0 | 12 | 12 | 24 | 12 | 12 | 12 | 166 |
+| Tourillon | 8 | 4 | 4 | 10 | 10 | 10 | 8 | 8 | 0 | 8 | 8 | 16 | 8 | 8 | 8 | 118 |
+| CharnierePorte | 2 | 2 | 0 | 0 | 0 | 0 | 2 | 2 | 0 | 0 | 4 | 4 | 2 | 2 | 2 | 22 |
+| PionSupportEtagere | 0 | 4 | 0 | 0 | 0 | 0 | 8 | 8 | 0 | 0 | 0 | 8 | 8 | 8 | 8 | 52 |
 | TiroirBas | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 4 |
 | TiroirMoyen | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 4 |
 | RailKickToe | 0 | 0 | 0 | 2 | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 6 |
@@ -105,4 +113,4 @@
 | ChevilleMurale | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
 | GlissierePorte | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 4 |
 
-**Prix total de l'inventaire : 1253.68 €**
+**Prix total de l'inventaire : 1544.63 €**

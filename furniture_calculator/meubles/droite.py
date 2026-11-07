@@ -23,7 +23,7 @@ meuble_d1.ajouter(
         largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
         compte=1,
         nom="Haut",
-        champ=[L1]
+        champ=[L1, G1, G2]
     )
 )
 val = g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE - g.PROFONDEUR_FOND_DE_MEUBLE
@@ -135,7 +135,7 @@ meuble_d3 = Meuble(nom="Droite 3")
 meuble_d3.ajouter(
     PlancheVert(
         longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
-        largeur = g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur = g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.MARGE_ENTRE_PLANCHE_FACADE - 2 * g.EPAISSEUR_PLANCHE, # on compte marge en haut et en bas
         compte = 2,
         nom = "Porte",
         champ = [G1, G2, L1, L2]
@@ -220,12 +220,220 @@ meuble_d3.ajouter(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 meuble_d4 = Meuble(nom="Droite 4")
+
+meuble_d4.ajouter(
+    PlancheVert(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE,
+        compte=1,
+        nom="Porte",
+        champ=[L1, L2, G1, G2]
+    )
+)
+
+meuble_d4.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Bas",
+        champ=[L1, G1, G2]
+    )
+)
+meuble_d4.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Haut",
+        champ=[L1, G1, G2]
+    )
+)
+meuble_d4.ajouter(
+    PlancheBlanc(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_BAS_DROITE - g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.EPAISSEUR_PLANCHE,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Gauche",
+        champ=[L1]
+    )
+)
+meuble_d4.ajouter(
+    PlancheBlanc(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_BAS_DROITE - g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.EPAISSEUR_PLANCHE,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="DROITE",
+        champ=[L1]
+    )
+)
+meuble_d4.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD - 2*g.EPAISSEUR_PLANCHE,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE - g.MARGE_DEVANT_ETAGERE - g.PROFONDEUR_FOND_DE_MEUBLE,
+        compte=2,
+        nom="Etagere",
+        champ=[L1]
+    )
+)
+
+meuble_d4.ajouter(
+    PionSupportEtagere(compte = (
+        8
+    ))
+)
+meuble_d4.ajouter(
+    Vis(compte = (
+        6 # gauche
+        + 6 # droite
+    ))
+)
+meuble_d4.ajouter(
+    Tourillon(compte = (
+        4 # gauche
+        + 4 # droite
+    ))
+)
+meuble_d4.ajouter(
+    CharnierePorte(compte = (
+        2
+    ))
+)
 
 meuble_d5 = meuble_d4.copy()
 meuble_d5.rename("Droite 5")
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 meuble_d6 = Meuble(nom="Droite 6")
+
+
+
+
+meuble_d6.ajouter(
+    PlancheVert(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE,
+        compte=1,
+        nom="Porte",
+        champ=[L1, L2, G1, G2]
+    )
+)
+
+meuble_d6.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Bas",
+        champ=[L1, G1, G2]
+    )
+)
+meuble_d6.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Haut",
+        champ=[L1, G1, G2]
+    )
+)
+meuble_d6.ajouter(
+    PlancheBlanc(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="Gauche",
+        champ=[L1]
+    )
+)
+meuble_d6.ajouter(
+    PlancheBlanc(
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE,
+        compte=1,
+        nom="DROITE",
+        champ=[L1]
+    )
+)
+meuble_d6.ajouter(
+    PlancheBlanc(
+        longueur=g.LARGEUR_STANDARD - 2*g.EPAISSEUR_PLANCHE,
+        largeur=g.PROFONDEUR_MEUBLE_DROITE - g.EPAISSEUR_PLANCHE - g.MARGE_DEVANT_ETAGERE - g.PROFONDEUR_FOND_DE_MEUBLE,
+        compte=2,
+        nom="Etagere",
+        champ=[L1]
+    )
+)
+
+meuble_d6.ajouter(
+    PionSupportEtagere(compte = (
+        8
+    ))
+)
+meuble_d6.ajouter(
+    Vis(compte = (
+        6 # gauche
+        + 6 # droite
+    ))
+)
+meuble_d6.ajouter(
+    Tourillon(compte = (
+        4 # gauche
+        + 4 # droite
+    ))
+)
+meuble_d6.ajouter(
+    CharnierePorte(compte = (
+        2
+    ))
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 inventaire_droite = Inventaire()
 

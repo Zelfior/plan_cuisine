@@ -39,7 +39,7 @@ MARGE_ARRIERE_DROITE = 15         # marge arrière droite
 PROFONDEUR_MEUBLE_DROITE = PROFONDEUR_DISPONIBLE_DROITE - MARGE_AVANT_DROITE - MARGE_ARRIERE_DROITE           # profondeur droite
 
 HAUTEUR_BAS_DROITE = 950          # hauteur bas droite
-HAUTEUR_DROITE = 2388             # hauteur droite (totale)
+HAUTEUR_DROITE = 2500             # hauteur droite (totale)
 HAUTEUR_SUR_FRIGO = 1500          # hauteur sur frigo
 
 HAUTEUR_FACADE_BAS_DROITE_CORRIGEE = HAUTEUR_BAS_DROITE + EPAISSEUR_PLANCHE
