@@ -284,6 +284,14 @@ class PlanchePlan(Planche):
     prix_m2 = 71.08
     couleur_defaut = Couleur.GRIS  # plan brut, finition non définie
 
+class PlanchePlanFin(Planche):
+    epaisseur_cm = 1.2
+    masse_par_cm2 = 0.002439024
+    longueur_defaut = 360
+    largeur_defaut = 65
+    prix_m2 = 99.34
+    couleur_defaut = Couleur.GRIS  # plan brut, finition non définie
+
 
 class PlancheBlanc(Planche):
     epaisseur_cm = 1.9

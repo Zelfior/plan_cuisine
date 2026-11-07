@@ -7,7 +7,9 @@ https://www.dispano.fr/p/panneau-decoratif/panneau-particules-surface-melamine-e
 https://www.dispano.fr/p/panneau-decoratif/panneau-laque-support-mdf-interieur-perfectsense-matt-u604-face-pm-contreface-st9-format-280x207cm-epaisseur-19mm-vert-eucalyptus-ref-1782034-A4955498
 
 ## Plans de travail
-https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-egger-support-hydrofuge-p3-stratifie-hpl-decor-beton-chicago-gris-clair-f186-finition-st9-chant-postforme-format-410x65cm-ep-A7792231 ?
+https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-egger-support-hydrofuge-p3-stratifie-hpl-decor-beton-chicago-gris-clair-f186-finition-st9-chant-postforme-format-410x65cm-ep-A7792231
+
+https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-stratifie-compact-hpl-teinte-dans-masse-colorcore-categorie-pattern-ame-noir-decor-2-faces-nero-graphite-f9485-finition-A7685466
 
 ##  Fond de meuble
 https://www.dispano.fr/p/panneaux/mdf-fibraprint-1-face-laque-blanc-milieu-sec-standard-e1-244x122cm-A1423866

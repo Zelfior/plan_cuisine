@@ -48,6 +48,7 @@
 | PlancheFond Fond_2 | 568 | 968 | FOND | - | 1 | 5.84 | 5.84 |
 | PlancheBlanc Gauche | 962 | 551 | BLANC | L1 | 2 | 10.62 | 21.24 |
 | PlanchePlan Gauche | 1980 | 650 | GRIS | - | 1 | 91.48 | 91.48 |
+| PlanchePlanFin droite | 1004 | 538 | GRIS | - | 1 | 53.66 | 53.66 |
 
 ## Objets
 
@@ -113,6 +114,7 @@
 | PlancheFond 568x968 (FOND, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Fond_2 | 0 | 0 | 0 | 1 |
 | PlancheBlanc 962x551 (BLANC, Champ: L1) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2: Gauche<br>DROITE | 0 | 2 |
 | PlanchePlan 1980x650 (GRIS, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: Gauche | 1 |
+| PlanchePlanFin 1004x538 (GRIS, Champ: -) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1: droite | 1 |
 | Vis | 10 | 6 | 6 | 12 | 12 | 12 | 12 | 12 | 0 | 12 | 12 | 24 | 12 | 12 | 12 | 0 | 166 |
 | Tourillon | 8 | 4 | 4 | 10 | 10 | 10 | 8 | 8 | 0 | 8 | 8 | 16 | 8 | 8 | 8 | 0 | 118 |
 | CharnierePorte | 2 | 2 | 0 | 0 | 0 | 0 | 2 | 2 | 0 | 0 | 4 | 4 | 2 | 2 | 2 | 0 | 22 |
@@ -125,4 +127,4 @@
 | ChevilleMurale | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
 | GlissierePorte | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 4 |
 
-**Prix total de l'inventaire : 1684.23 €**
+**Prix total de l'inventaire : 1737.88 €**
