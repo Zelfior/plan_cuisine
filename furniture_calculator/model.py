@@ -12,6 +12,7 @@ class Couleur(Enum):
     BLANC = auto()
     VERT = auto()
     FOND = auto()
+    GRIS = auto()
 
 class ChampDirection(Enum):
     """Direction du champ."""
@@ -281,7 +282,7 @@ class PlanchePlan(Planche):
     longueur_defaut = 410
     largeur_defaut = 65
     prix_m2 = 71.08
-    couleur_defaut = Couleur.BLANC  # plan brut, finition non définie
+    couleur_defaut = Couleur.GRIS  # plan brut, finition non définie
 
 
 class PlancheBlanc(Planche):
