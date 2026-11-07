@@ -42,7 +42,8 @@ meuble_g4.ajouter(
         longueur = g.HAUTEUR_HAUT_GAUCHE,
         largeur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte = 1,
-        nom = "Porte"
+        nom = "Porte",
+        champ = [G1, G2, L1, L2]
     )
 )
 meuble_g4.ajouter(
@@ -81,9 +82,21 @@ meuble_g4.ajouter(
         compte = 8
     )
 )
+meuble_g4.ajouter(
+    CrochetMural(
+        compte = 2
+    )
+)
 
 meuble_g5 = meuble_g4.copy()
 meuble_g5.rename("Gauche 5")
+
+meuble_g5.ajouter(
+    Rail2m(compte = 1)
+)
+meuble_g5.ajouter(
+    ChevilleMurale(compte = 9)
+)
 
 meuble_g6 = Meuble(nom="Gauche 6")
 

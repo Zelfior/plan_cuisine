@@ -1,3 +1,5 @@
+import warnings
+
 import furniture_calculator.geometry as g
 from furniture_calculator.model import *
 
@@ -58,7 +60,8 @@ def ajouter_base_meuble(
             longueur=profondeur_caisson,
             largeur=hauteur_caisson,
             compte=1,
-            nom="Côtés gauche"
+            nom="Côtés gauche",
+            champ=[G1]
         )
     )
 
@@ -67,7 +70,8 @@ def ajouter_base_meuble(
             longueur=profondeur_caisson,
             largeur=hauteur_caisson,
             compte=1,
-            nom="Côtés droite"
+            nom="Côtés droite",
+            champ=[G1]
         )
     )
 
@@ -76,7 +80,8 @@ def ajouter_base_meuble(
             longueur=profondeur_caisson,
             largeur=largeur_interieure,
             compte=1,
-            nom="Base"
+            nom="Base",
+            champ=[G1]
         )
     )
 
@@ -152,7 +157,8 @@ meuble_g1.ajouter(
         ),
         largeur=LARGEUR_INTERIEURE,
         compte=1,
-        nom="Fond"
+        nom="Fond",
+        champ = [G1]
     )
 )
 
@@ -165,7 +171,8 @@ meuble_g1.ajouter(
         ),
         largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
-        nom="Porte"
+        nom="Porte",
+        champ = [G1, G2, L1, L2]
     )
 )
 
@@ -233,7 +240,8 @@ meuble_g2.ajouter(
         ),
         largeur=LARGEUR_INTERIEURE,
         compte=1,
-        nom="Etagère"
+        nom="Etagère",
+        champ = [G1]
     )
 )
 
@@ -248,7 +256,8 @@ meuble_g2.ajouter(
         ),
         largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
-        nom="Porte"
+        nom="Porte",
+        champ = [G1, G2, L1, L2]
     )
 )
 
@@ -338,7 +347,8 @@ meuble_g3.ajouter(
         longueur=HAUTEUR_TIROIR_MIN,
         largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=2,
-        nom="Porte tiroir bas"
+        nom="Porte tiroir bas",
+        champ = [G1, G2, L1, L2]
     )
 )
 
@@ -347,7 +357,8 @@ meuble_g3.ajouter(
         longueur=HAUTEUR_TIROIR_RESTANT,
         largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
-        nom="Porte tiroir reste"
+        nom="Porte tiroir reste",
+        champ = [G1, G2, L1, L2]
     )
 )
 
@@ -356,10 +367,14 @@ meuble_g3.ajouter(
         longueur=HAUTEUR_TIROIR_MAX,
         largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
         compte=1,
-        nom="Porte tiroir haut"
+        nom="Porte tiroir haut",
+        champ = [G1, G2, L1, L2]
     )
 )
 
+val = PROFONDEUR_CAISSON - g.PROFONDEUR_FOND_DE_MEUBLE
+assert val > 532, f"Meuble gauche 3 profondeur interne {val}, le tiroir demande au minimum 532mm" # Profondeur tiroir
+warnings.warn(f"Meuble gauche 3 a un tiroir de 532mm, profondeur disponible {val} mm")
 
 # ============================================================
 # KICK DRAWER
@@ -379,7 +394,8 @@ def make_kick_drawer(
             longueur=g.HAUTEUR_PORTE_KICK_TOE,
             largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
             compte=1,
-            nom="Porte kick-toe"
+            nom="Porte kick-toe",
+            champ = [G1, G2, L1, L2]
         )
     )
 
@@ -398,7 +414,8 @@ def make_kick_drawer(
             longueur=profondeur_kick_toe,
             largeur=g.LARGEUR_KICK_TOE,
             compte=1,
-            nom="Base kick-toe"
+            nom="Base kick-toe",
+            champ=[L1, L2]
         )
     )
 
@@ -407,7 +424,8 @@ def make_kick_drawer(
             longueur=profondeur_kick_toe,
             largeur=g.HAUTEUR_KICK_TOE,
             compte=1,
-            nom="gauche"
+            nom="gauche",
+            champ=[L1]
         )
     )
     kick_drawer.ajouter(
@@ -415,7 +433,17 @@ def make_kick_drawer(
             longueur=profondeur_kick_toe,
             largeur=g.HAUTEUR_KICK_TOE,
             compte=1,
-            nom="droite"
+            nom="droite",
+            champ=[L1]
+        )
+    )
+    kick_drawer.ajouter(
+        PlancheBlanc(
+            longueur=profondeur_kick_toe,
+            largeur=g.LARGUEUR_CALE_KICK_TOE,
+            compte=2,
+            nom="cale",
+            champ=[L1]
         )
     )
     kick_drawer.ajouter(
@@ -423,7 +451,8 @@ def make_kick_drawer(
             longueur=g.LARGEUR_KICK_TOE - 2 * g.EPAISSEUR_PLANCHE,
             largeur=g.HAUTEUR_KICK_TOE,
             compte=1,
-            nom="fond"
+            nom="fond",
+            champ=[L1]
         )
     )
 

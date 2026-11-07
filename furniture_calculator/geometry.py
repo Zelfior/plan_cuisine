@@ -42,6 +42,8 @@ HAUTEUR_BAS_DROITE = 950          # hauteur bas droite
 HAUTEUR_DROITE = 2388             # hauteur droite (totale)
 HAUTEUR_SUR_FRIGO = 1500          # hauteur sur frigo
 
+HAUTEUR_FACADE_BAS_DROITE_CORRIGEE = HAUTEUR_BAS_DROITE + EPAISSEUR_PLANCHE
+
 # =====================================================================
 # Fonds de meuble
 # =====================================================================
@@ -55,6 +57,7 @@ LARGEUR_RAINURE_FOND = 3         # largeur rainure du fond
 # =====================================================================
 
 HAUTEUR_TIROIR_MIN = 120          # hauteur tiroir minimum
+HAUTEUR_FOUR = 600          # hauteur tiroir minimum
 
 # =====================================================================
 # Marges et tolérances
@@ -63,6 +66,7 @@ HAUTEUR_TIROIR_MIN = 120          # hauteur tiroir minimum
 INCERTITUDE_SOL = 5              # incertitude de niveau du sol
 MARGE_DEVANT_ETAGERE = 20         # marge devant étagère
 MARGE_ENTRE_PLANCHE_FACADE = 3   # marge entre planche de façade
+MARGE_PORTE_COULISSANTE = 60   # marge entre planche de façade
 
 # =====================================================================
 # Standards
@@ -78,11 +82,18 @@ MILIEU_DE_COURSE_PIED = 12        # milieu de course du pied réglable
 PROFONDEUR_KICK_TOE_EVIER = PROFONDEUR_MEUBLE_EVIER - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
 PROFONDEUR_KICK_TOE_GAUCHE = PROFONDEUR_MEUBLE_GAUCHE_BAS - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
 PROFONDEUR_KICK_TOE_DROITE = PROFONDEUR_MEUBLE_DROITE - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
+LARGUEUR_CALE_KICK_TOE = 100 # Largeur de la cale pour le kick-toe (pour laisser passer les supports de meuble)
 
 EPAISSEUR_RAIL_KICK_TOE = 12.7              # épaisseur rail kick-toe
 
 HAUTEUR_KICK_TOE = 149            # hauteur kick-toe
-LARGEUR_KICK_TOE = LARGEUR_STANDARD - 2 * (EPAISSEUR_PLANCHE + EPAISSEUR_RAIL_KICK_TOE)                # largeur kick-toe
+LARGEUR_KICK_TOE = LARGEUR_STANDARD - (
+    EPAISSEUR_PLANCHE + # Planche externes
+    EPAISSEUR_PLANCHE + # Attache pour laisser passer les supports de meuble
+    EPAISSEUR_RAIL_KICK_TOE #   Rails de fixation
+)                # largeur kick-toe
 HAUTEUR_PORTE_KICK_TOE = 180      # hauteur porte kick-toe
 
 HAUTEUR_DEBUT_MEUBLE_BAS = INCERTITUDE_SOL + HAUTEUR_PORTE_KICK_TOE + MARGE_ENTRE_PLANCHE_FACADE
+HAUTEUR_MEUBLE_TRAVAIL_DROITE = 850
+LARGEUR_ETAGERE_MEUBLE_TRAVAIL_DROITE = 300

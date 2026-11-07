@@ -1,6 +1,6 @@
 #   Résumé installation cuisine
 
-![Animation](images/0000-0192.gif)
+![Animation](images/0000-0144.gif)
 
 ##  Sommaire
 
