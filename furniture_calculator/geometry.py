@@ -79,9 +79,9 @@ MILIEU_DE_COURSE_PIED = 12        # milieu de course du pied réglable
 # Kick-toe (plinthe)
 # =====================================================================
 
-PROFONDEUR_KICK_TOE_EVIER = PROFONDEUR_MEUBLE_EVIER - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
-PROFONDEUR_KICK_TOE_GAUCHE = PROFONDEUR_MEUBLE_GAUCHE_BAS - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
-PROFONDEUR_KICK_TOE_DROITE = PROFONDEUR_MEUBLE_DROITE - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
+PROFONDEUR_KICK_TOE_EVIER = PROFONDEUR_MEUBLE_EVIER - EPAISSEUR_PLANCHE - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
+PROFONDEUR_KICK_TOE_GAUCHE = PROFONDEUR_MEUBLE_GAUCHE_BAS - EPAISSEUR_PLANCHE - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
+PROFONDEUR_KICK_TOE_DROITE = PROFONDEUR_MEUBLE_DROITE - EPAISSEUR_PLANCHE - MARGE_DEVANT_ETAGERE         # profondeur kick-toe
 LARGUEUR_CALE_KICK_TOE = 100 # Largeur de la cale pour le kick-toe (pour laisser passer les supports de meuble)
 
 EPAISSEUR_RAIL_KICK_TOE = 12.7              # épaisseur rail kick-toe

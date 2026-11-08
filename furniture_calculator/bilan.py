@@ -15,5 +15,6 @@ inventaire += inventaire_plan_de_travail
 
 inventaire.ecrire_bilan_markdown("bilan.md")
 inventaire.ecrire_bilan_excel("bilan.xlsx")
+inventaire.ecrire_planches_excel("planches.xlsx")
 
 # print(inventaire.bilan())

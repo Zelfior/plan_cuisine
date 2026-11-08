@@ -58,7 +58,7 @@ hauteur_tiroir_bas = (
 
 meuble_d1.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = hauteur_tiroir_bas,
         compte = 1,
         nom = "Tiroir 1",
@@ -67,7 +67,7 @@ meuble_d1.ajouter(
 )
 meuble_d1.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = hauteur_tiroir_bas,
         compte = 1,
         nom = "Tiroir 2",
@@ -76,7 +76,7 @@ meuble_d1.ajouter(
 )
 meuble_d1.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = g.HAUTEUR_TIROIR_MIN,
         compte = 1,
         nom = "Tiroir 3",
@@ -85,7 +85,7 @@ meuble_d1.ajouter(
 )
 meuble_d1.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = g.HAUTEUR_TIROIR_MIN,
         compte = 1,
         nom = "Tiroir 4",
@@ -112,7 +112,7 @@ hauteur_tiroir_d2 = (
 )
 meuble_d2.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = g.HAUTEUR_FOUR - g.MARGE_ENTRE_PLANCHE_FACADE + g.EPAISSEUR_PLANCHE,
         compte = 1,
         nom = "Porte four",
@@ -121,7 +121,7 @@ meuble_d2.ajouter(
 )
 meuble_d2.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = hauteur_tiroir_d2,
         compte = 1,
         nom = "Tiroir",
@@ -154,7 +154,7 @@ meuble_d2.ajouter(
 meuble_d3 = Meuble(nom="Droite 3")
 meuble_d3.ajouter(
     PlancheVert(
-        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE/2,
+        longueur = g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         largeur = g.HAUTEUR_MEUBLE_TRAVAIL_DROITE - 2 * g.MARGE_ENTRE_PLANCHE_FACADE - 2 * g.EPAISSEUR_PLANCHE, # on compte marge en haut et en bas
         compte = 2,
         nom = "Porte",
@@ -201,7 +201,7 @@ meuble_d3.ajouter(
     PlancheBlanc(
         longueur = g.LARGEUR_STANDARD * 2 - 2*(g.EPAISSEUR_PLANCHE * 2 + g.MARGE_PORTE_COULISSANTE),
         largeur = g.LARGEUR_ETAGERE_MEUBLE_TRAVAIL_DROITE,
-        compte = 2,
+        compte = 1,
         nom = "Etagere",
         champ = [L1]
     )
@@ -270,8 +270,8 @@ meuble_d4 = Meuble(nom="Droite 4")
 
 meuble_d4.ajouter(
     PlancheVert(
-        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
-        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE,
+        longueur=g.HAUTEUR_DROITE - g.HAUTEUR_BAS_DROITE - g.HAUTEUR_MEUBLE_TRAVAIL_DROITE,
+        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte",
         champ=[L1, L2, G1, G2]
@@ -385,7 +385,7 @@ meuble_d6 = Meuble(nom="Droite 6")
 meuble_d6.ajouter(
     PlancheVert(
         longueur=g.HAUTEUR_DROITE - g.HAUTEUR_SUR_FRIGO,
-        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD- g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte",
         champ=[L1, L2, G1, G2]

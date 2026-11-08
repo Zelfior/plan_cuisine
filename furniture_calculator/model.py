@@ -26,6 +26,10 @@ L2 = ChampDirection.L2
 G1 = ChampDirection.G1
 G2 = ChampDirection.G2
 
+# Quand on échange longueur et largeur, les champs suivent :
+# un champ sur la longueur devient un champ sur la largeur, et inversement.
+_ECHANGE_CHAMP = {L1: G1, G1: L1, L2: G2, G2: L2}
+
 @dataclass(frozen=True)
 class Lot:
     """Lot d'achat : prix du lot, nombre d'unités, url fournisseur."""
@@ -125,6 +129,9 @@ class Planche:
     """Planche avec compte et parent, plus longueur, largeur et couleur.
 
     Le hash prend en compte longueur, largeur, couleur et prix au m².
+    Le numéro de référence (`reference`) identifie chaque planche dans
+    l'inventaire ; il est attribué automatiquement à l'ajout et ne
+    participe ni au hash ni à l'égalité.
     """
 
     prix_m2: float = 0.0          # prix au m², à définir par la classe enfant
@@ -133,6 +140,9 @@ class Planche:
     longueur_defaut: float = 0.0  # dimensions de la plaque entière
     largeur_defaut: float = 0.0
     couleur_defaut: Optional[Couleur] = None
+    reference_materiau: int = 0  # référence fournisseur du matériau (à renseigner)
+    reference_chant: int = 0  # référence fournisseur du matériau (à renseigner)
+    epaisseur_chant_mm: Optional[float] = None  # épaisseur du chant (à renseigner)
 
     def __init__(
         self,
@@ -141,7 +151,10 @@ class Planche:
         couleur: Optional[Couleur] = None,
         compte: int = 0, parent: Optional["Meuble"] = None,
         nom: Optional[str] = None,
-        champ: List[ChampDirection] = None
+        champ: List[ChampDirection] = None,
+        reference_materiau: Optional[int] = None,
+        reference_chant: Optional[int] = None,
+        epaisseur_chant_mm: Optional[float] = None,
     ):
         # arrondi à 2 décimales pour éviter le bruit des flottants
         # (69.89999999999999 -> 69.9) et stabiliser le hash
@@ -163,8 +176,11 @@ class Planche:
         self.nom = nom or f"{self.longueur}x{self.largeur}"
         self.compte = compte
         self.parent = parent
+        self.reference_materiau = reference_materiau  # numéro de référence (None tant que non attribué)
+        self.reference_chant = reference_chant  # numéro de référence (None tant que non attribué)
         self.historique: Dict[str, int] = {}
         self.champ = champ if champ is not None else []
+        self.epaisseur_chant_mm = epaisseur_chant_mm
         if parent is not None and compte:
             self.historique[parent.nom] = (
                 self.historique.get(parent.nom, 0) + compte
@@ -213,6 +229,8 @@ class Planche:
         if not isinstance(other, Planche) or hash(self) != hash(other):
             return NotImplemented
 
+        # la référence n'est pas conservée : le résultat est une
+        # planche agrégée, qui recevra un nouveau numéro à l'ajout
         resultat = self.__class__(
             self.longueur,
             self.largeur,
@@ -252,7 +270,8 @@ class Planche:
             self.compte,
             self.parent,
             self.nom,
-            champ=self.champ.copy()
+            champ=self.champ.copy(),
+            reference_materiau=self.reference_materiau
         )
         copie.historique = dict(self.historique)
         return copie
@@ -264,7 +283,8 @@ class Planche:
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__name__}({self.longueur}x{self.largeur}, "
+            f"{self.__class__.__name__}(ref={self.reference_materiau}, "
+            f"{self.longueur}x{self.largeur}, "
             f"{self.couleur.name if self.couleur else '?'}, "
             f"compte={self.compte}, prix_unitaire={self.prix_unitaire:.2f}€, "
             f"masse={self.masse:.2f}kg)"
@@ -284,6 +304,8 @@ class PlanchePlan(Planche):
     prix_m2 = 71.08
     couleur_defaut = Couleur.GRIS  # plan brut, finition non définie
 
+    reference_materiau = 7792231
+
 class PlanchePlanFin(Planche):
     epaisseur_cm = 1.2
     masse_par_cm2 = 0.002439024
@@ -292,6 +314,7 @@ class PlanchePlanFin(Planche):
     prix_m2 = 99.34
     couleur_defaut = Couleur.GRIS  # plan brut, finition non définie
 
+    reference_materiau = 7685466
 
 class PlancheBlanc(Planche):
     epaisseur_cm = 1.9
@@ -301,6 +324,9 @@ class PlancheBlanc(Planche):
     prix_m2 = 20.04
     couleur_defaut = Couleur.BLANC
 
+    reference_materiau = 4751147
+    reference_chant = 4988684
+    epaisseur_chant_mm = 0.8
 
 class PlancheVert(Planche):
     epaisseur_cm = 1.9
@@ -310,6 +336,9 @@ class PlancheVert(Planche):
     prix_m2 = 56.35
     couleur_defaut = Couleur.VERT
 
+    reference_materiau = 4955498
+    reference_chant = 4767042
+    epaisseur_chant_mm = 2.
 
 class PlancheFond(Planche):
     epaisseur_cm = 0.3
@@ -319,6 +348,7 @@ class PlancheFond(Planche):
     prix_m2 = 10.62
     couleur_defaut = Couleur.FOND
 
+    reference_materiau = 1423866
 
 # =====================================================================
 # Classes enfants d'Objet : quincaillerie
@@ -420,6 +450,10 @@ class Meuble:
             element.historique.get(self.nom, 0) + element.compte
         )
         cible.append(element)
+        # si le meuble est déjà dans un inventaire, la planche reçoit
+        # tout de suite son numéro de référence
+        if self.inventaire is not None:
+            self.inventaire._attribuer_references()
 
     @property
     def prix_total(self) -> float:
@@ -485,12 +519,38 @@ class Inventaire:
             )
         meuble.inventaire = self
         self.meubles.append(meuble)
+        self._attribuer_references()
+
+    # ----------------------------------------------------------- références
+    def _attribuer_references(self) -> None:
+        """Donne un numéro de référence unique à chaque planche.
+
+        Une planche garde sa référence tant qu'elle est unique dans
+        l'inventaire ; sans référence (ou en cas de doublon, par exemple
+        après une fusion), elle reçoit le prochain numéro libre.
+        """
+        vues = set()
+        a_numeroter: List[Planche] = []
+        for meuble in self.meubles:
+            for planche in meuble.planches:
+                if planche.reference_materiau is None or planche.reference_materiau in vues:
+                    a_numeroter.append(planche)
+                else:
+                    vues.add(planche.reference_materiau)
+
+        suivant = max(vues, default=0) + 1
+        for planche in a_numeroter:
+            planche.reference_materiau = suivant
+            vues.add(suivant)
+            suivant += 1
 
     # --------------------------------------------------------------- copie
     def copy(self) -> "Inventaire":
         """Copie indépendante de l'inventaire (meubles et contenu copiés)."""
         copie = Inventaire()
         copie.meubles = [meuble.copy() for meuble in self.meubles]
+        for meuble in copie.meubles:
+            meuble.inventaire = copie
         return copie
 
     __copy__ = copy
@@ -806,8 +866,9 @@ class Inventaire:
         """Exporte les trois tableaux du bilan dans un classeur Excel.
 
         Le classeur contient trois onglets : « Planches », « Objets » et
-        « Répartition par meuble ». Les données sont calculées à partir de
-        l'inventaire au moment de l'export.
+        « Répartition par meuble ». Les onglets « Planches » et
+        « Répartition par meuble » ont une colonne « Couleur ». Les données
+        sont calculées à partir de l'inventaire au moment de l'export.
         """
         from openpyxl import Workbook
         from openpyxl.styles import Alignment, Font, PatternFill
@@ -848,7 +909,7 @@ class Inventaire:
                     max(largeur + 2, 12), 45
                 )
 
-        # Onglet 1 : planches.
+        # Onglet 1 : planches (colonne Couleur en 4e position).
         preparer_feuille(ws_planches, [
             "Type", "Longueur (cm)", "Largeur (cm)", "Couleur",
             "Champ", "Nombre", "Prix/u (€)", "Total (€)",
@@ -883,9 +944,10 @@ class Inventaire:
                 if isinstance(cellule.value, (int, float)):
                     cellule.number_format = '#,##0.00 [$€-fr-FR]'
 
-        # Onglet 3 : répartition des quantités par meuble.
+        # Onglet 3 : répartition des quantités par meuble
+        # (colonne Couleur en 2e position, vide pour les objets).
         preparer_feuille(
-            ws_repartition, ["Élément", *noms, "Total"]
+            ws_repartition, ["Élément", "Couleur", *noms, "Total"]
         )
         for cle, par_meuble in detail.items():
             p = planches[cle]["ex"]
@@ -907,15 +969,124 @@ class Inventaire:
                         for n, q in tailles
                     )
                     cases.append(f"{quantite}: {details_noms}")
-            ws_repartition.append([libelle, *cases, total])
+            ws_repartition.append([libelle, p.couleur.name, *cases, total])
 
         for cls, entree in objets.items():
             cases = [entree["par_meuble"].get(nom, 0) for nom in noms]
-            ws_repartition.append([cls.__name__, *cases, sum(cases)])
+            ws_repartition.append([cls.__name__, "", *cases, sum(cases)])
 
         for feuille in classeur.worksheets:
             feuille.sheet_view.showGridLines = False
             ajuster_largeurs(feuille)
+
+        classeur.save(chemin)
+        return chemin
+
+    # ----------------------------------------------- fichier Excel (matériaux)
+    def ecrire_planches_excel(
+        self, chemin: str = "planches.xlsx"
+    ) -> str:
+        """Exporte les planches : un onglet par matériau (classe de planche).
+
+        Colonnes : Référence, Nom, Longueur (cm), Largeur (cm), Nombre,
+        L1, L2, G1, G2 (cochées si la planche a ce champ).
+
+        La longueur est toujours supérieure ou égale à la largeur : si une
+        planche est saisie dans l'autre sens, longueur et largeur sont
+        échangées dans l'export, et les champs suivent (L1<->G1, L2<->G2).
+        Les données de l'inventaire ne sont pas modifiées.
+        """
+        from openpyxl import Workbook
+        from openpyxl.styles import Alignment, Font, PatternFill
+        from openpyxl.utils import get_column_letter
+
+        self._attribuer_references()
+
+        # regroupement des planches par matériau (classe), ordre d'apparition
+        par_materiau: Dict[type, List[Planche]] = {}
+        for meuble in self.meubles:
+            for planche in meuble.planches:
+                par_materiau.setdefault(planche.__class__, []).append(planche)
+
+        classeur = Workbook()
+        classeur.remove(classeur.active)
+
+        remplissage_entete = PatternFill(fill_type="solid", fgColor="1F4E78")
+        police_entete = Font(color="FFFFFF", bold=True)
+        alignement_entete = Alignment(
+            horizontal="center", vertical="center", wrap_text=True
+        )
+        entetes = [
+            "Références", "Nom", "Longueur (cm)", "Largeur (cm)", "Nombre",
+            "L1", "L2", "G1", "G2",
+        ]
+        directions = [L1, L2, G1, G2]
+
+        if not par_materiau:
+            classeur.create_sheet("Planches")
+
+        for cls, liste in par_materiau.items():
+            feuille = classeur.create_sheet(cls.__name__[:31])
+            feuille.append(entetes)
+            feuille.freeze_panes = "A2"
+            feuille.auto_filter.ref = f"A1:{get_column_letter(len(entetes))}1"
+            for cellule in feuille[1]:
+                cellule.fill = remplissage_entete
+                cellule.font = police_entete
+                cellule.alignment = alignement_entete
+            feuille.row_dimensions[1].height = 30
+
+            # fusion par (longueur, largeur, champs) ; les noms ne comptent
+            # pas : on garde le nom s'il est identique partout, sinon vide
+            fusion: Dict[tuple, Dict] = {}
+            for p in sorted(liste, key=lambda x: x.reference or 0):
+                longueur, largeur, champ = p.longueur, p.largeur, list(p.champ)
+                if longueur < largeur:  # longueur doit être > largeur
+                    longueur, largeur = largeur, longueur
+                    champ = [_ECHANGE_CHAMP[c] for c in champ]
+                cle = (longueur, largeur, frozenset(champ))
+                e = fusion.setdefault(cle, {
+                    "refs": [], "noms": set(), "compte": 0, "champ": champ,
+                })
+                e["refs"].append(p.reference)
+                e["noms"].add(p.nom)
+                e["compte"] += p.compte
+
+            for (longueur, largeur, _), e in fusion.items():
+                nom = next(iter(e["noms"])) if len(e["noms"]) == 1 else ""
+                refs = ", ".join(str(r) for r in e["refs"] if r is not None)
+                feuille.append([
+                    refs, nom, longueur, largeur, e["compte"],
+                    *("✓" if d in e["champ"] else "" for d in directions),
+                ])
+
+            for ligne in feuille.iter_rows(min_row=2, min_col=6, max_col=9):
+                for cellule in ligne:
+                    cellule.alignment = Alignment(horizontal="center")
+
+            # fiche du matériau, à droite du tableau (colonnes K et L)
+            fiche = [
+                ("Référence", cls.reference_materiau or ""),
+                ("Référence chant", cls.reference_chant or ""),
+                ("Épaisseur (mm)", cls.epaisseur_cm * 10),
+                ("Épaisseur chant (mm)",
+                 "" if cls.epaisseur_chant_mm is None
+                 else cls.epaisseur_chant_mm),
+            ]
+            for i, (libelle, valeur) in enumerate(fiche, start=1):
+                feuille.cell(row=i, column=11, value=libelle).font = Font(
+                    bold=True
+                )
+                feuille.cell(row=i, column=12, value=valeur)
+            for colonne in feuille.columns:
+                lettre = get_column_letter(colonne[0].column)
+                largeur_col = max(
+                    (len(str(c.value or "")) for c in colonne), default=10
+                )
+                feuille.column_dimensions[lettre].width = min(
+                    max(largeur_col + 2, 8), 40
+                )
+            feuille.sheet_view.showGridLines = False
 
         classeur.save(chemin)
         return chemin
@@ -929,7 +1100,11 @@ class Inventaire:
         resultat = Inventaire()
 
         for meuble in self.meubles + other.meubles:
-            resultat.ajouter(meuble.copy())
+            copie = meuble.copy()
+            # nouvelle numérotation dans l'inventaire fusionné
+            for planche in copie.planches:
+                planche.reference = None
+            resultat.ajouter(copie)
 
         return resultat
 
@@ -951,6 +1126,10 @@ class Inventaire:
             )
 
         for meuble in other.meubles:
-            self.ajouter(meuble.copy())
+            copie = meuble.copy()
+            # les références de l'autre inventaire sont renumérotées
+            for planche in copie.planches:
+                planche.reference = None
+            self.ajouter(copie)
 
         return self

@@ -3,13 +3,22 @@
 ## Structure
 https://www.dispano.fr/p/panneau-decoratif/panneau-particules-surface-melamine-eurodekor-blanc-support-e1e05-tsca-hydrofuge-p3-ce-blanc-kaolin-w980-finition-st7-categorie-blanc-format-280x207cm-epaisseur-19mm-A4751147
 
+chant : https://www.dispano.fr/p/panneau-decoratif/bande-de-chant-abs-blanc-w980-w908-blanc-kaolin-finition-lisse-contretype-501-u511-b070-020-025-epaisseur-0-8mm-largeur-23mm-rouleau-de-150m-ref-1672270-A4988684
+
 ## Devanture
 https://www.dispano.fr/p/panneau-decoratif/panneau-laque-support-mdf-interieur-perfectsense-matt-u604-face-pm-contreface-st9-format-280x207cm-epaisseur-19mm-vert-eucalyptus-ref-1782034-A4955498
+
+chant : https://www.dispano.fr/p/panneau-decoratif/bande-de-chant-abs-decor-u604-vert-eucalyptus-finition-face-st9-largeur-23mm-epaisseur-2mm-longueur-75m-A4767042
 
 ## Plans de travail
 https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-egger-support-hydrofuge-p3-stratifie-hpl-decor-beton-chicago-gris-clair-f186-finition-st9-chant-postforme-format-410x65cm-ep-A7792231
 
+chant : Déjà prévu
+<!-- https://www.dispano.fr/p/panneaux-decoratifs/bande-de-chant-thermoplastique-abs-egger-pour-plan-de-travail-decor-beton-chicago-gris-clair-f186-finition-st9-epaisseur-1-5mm-largeur-43mm-A7791660 -->
+
 https://www.dispano.fr/p/panneaux-decoratifs/plan-de-travail-stratifie-compact-hpl-teinte-dans-masse-colorcore-categorie-pattern-ame-noir-decor-2-faces-nero-graphite-f9485-finition-A7685466
+
+chant : Déjà prévu
 
 ##  Fond de meuble
 https://www.dispano.fr/p/panneaux/mdf-fibraprint-1-face-laque-blanc-milieu-sec-standard-e1-244x122cm-A1423866

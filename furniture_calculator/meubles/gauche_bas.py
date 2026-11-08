@@ -169,7 +169,7 @@ meuble_g1.ajouter(
             - g.HAUTEUR_DEBUT_MEUBLE_BAS
             - 2 * g.MARGE_ENTRE_PLANCHE_FACADE
         ),
-        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte",
         champ = [G1, G2, L1, L2]
@@ -254,7 +254,7 @@ meuble_g2.ajouter(
             - g.HAUTEUR_DEBUT_MEUBLE_BAS
             - 2 * g.MARGE_ENTRE_PLANCHE_FACADE
         ),
-        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte",
         champ = [G1, G2, L1, L2]
@@ -326,14 +326,13 @@ Vide sanitaire -- PROFONDEUR_VIDE_SANITAIRE
 ajouter_base_meuble(meuble_g3)
 
 HAUTEUR_TIROIR_MIN = g.HAUTEUR_TIROIR_MIN
-HAUTEUR_TIROIR_MAX = 28
+HAUTEUR_TIROIR_MAX = 280
 
 NOMBRE_INTERSTICES = 4
 
 HAUTEUR_TIROIR_RESTANT = (
     g.HAUTEUR_SOUS_PLAN_GAUCHE
     - g.HAUTEUR_DEBUT_MEUBLE_BAS
-    - g.HAUTEUR_PORTE_KICK_TOE
     - 2 * HAUTEUR_TIROIR_MIN
     - HAUTEUR_TIROIR_MAX
     - NOMBRE_INTERSTICES * g.MARGE_ENTRE_PLANCHE_FACADE
@@ -345,7 +344,7 @@ meuble_g3.ajouter(TiroirMoyen(compte=2))
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_MIN,
-        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=2,
         nom="Porte tiroir bas",
         champ = [G1, G2, L1, L2]
@@ -355,7 +354,7 @@ meuble_g3.ajouter(
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_RESTANT,
-        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte tiroir reste",
         champ = [G1, G2, L1, L2]
@@ -365,7 +364,7 @@ meuble_g3.ajouter(
 meuble_g3.ajouter(
     PlancheVert(
         longueur=HAUTEUR_TIROIR_MAX,
-        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+        largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
         compte=1,
         nom="Porte tiroir haut",
         champ = [G1, G2, L1, L2]
@@ -392,7 +391,7 @@ def make_kick_drawer(
     kick_drawer.ajouter(
         PlancheVert(
             longueur=g.HAUTEUR_PORTE_KICK_TOE,
-            largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE,
+            largeur=g.LARGEUR_STANDARD - g.MARGE_ENTRE_PLANCHE_FACADE*2/3,
             compte=1,
             nom="Porte kick-toe",
             champ = [G1, G2, L1, L2]
@@ -425,7 +424,7 @@ def make_kick_drawer(
             largeur=g.HAUTEUR_KICK_TOE,
             compte=1,
             nom="gauche",
-            champ=[L1]
+            champ=[L1, G1]
         )
     )
     kick_drawer.ajouter(
@@ -434,7 +433,7 @@ def make_kick_drawer(
             largeur=g.HAUTEUR_KICK_TOE,
             compte=1,
             nom="droite",
-            champ=[L1]
+            champ=[L1, G1]
         )
     )
     kick_drawer.ajouter(
